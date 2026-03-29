@@ -1,4 +1,4 @@
-# Estonia — Know Your Rights After Termination
+# Estonia: Know Your Rights After Termination
 
 A free, single-file web tool helping workers in Estonia understand their rights after wrongful termination. Available in English, Estonian, and Russian.
 
@@ -8,9 +8,7 @@ Guides users through 8 questions about their termination situation and produces 
 
 ## Deploy
 
-**Netlify Drop (easiest):** Drag `estonia-rights-tool.html` to [app.netlify.com/drop](https://app.netlify.com/drop). Live in under a minute.
-
-**GitHub Pages:** Add `estonia-rights-tool.html` to a repo, rename it `index.html`, then enable Pages under Settings → Pages → Branch: main.
+You can check the tool [here](http://consult-with-riz.github.io/estonian-labour-dispute-case)
 
 ## Legal basis
 
@@ -29,6 +27,5 @@ This tool explains the law. It is not legal advice.
 
 ## Notes
 
-- The ti.ee website requires JavaScript to render — links are correct but cannot be verified by automated fetching
 - The Labour Dispute Committee application must be submitted in Estonian
 - Tallinn Migration Centre offers free translation for employment disputes
