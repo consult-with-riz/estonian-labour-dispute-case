@@ -5,1198 +5,790 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Estonia — Know Your Rights After Termination</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #f7f6f2;
-    --surface: #ffffff;
-    --border: #e2e0d8;
-    --border-mid: #ccc9bd;
-    --text: #1a1917;
-    --text-muted: #6b6960;
-    --text-hint: #9e9b91;
-    --accent: #1a1917;
-    --blue-bg: #eaf2fb;
-    --blue-border: #b5cfe8;
-    --blue-text: #1a4d7c;
-    --warn-bg: #fdf4e3;
-    --warn-border: #f0c85a;
-    --warn-text: #7a5500;
-    --danger-bg: #fdf0ee;
-    --danger-border: #f5b8ae;
-    --danger-text: #8c2a1a;
-    --success-bg: #edf7f0;
-    --success-border: #a8d9b7;
-    --success-text: #1e6639;
-    --radius: 10px;
-    --radius-sm: 6px;
-  }
-
-  body {
-    font-family: 'Georgia', serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 0;
-  }
-
-  /* Header */
-  .site-header {
-    background: var(--text);
-    color: #fff;
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .site-header h1 {
-    font-size: 15px;
-    font-weight: normal;
-    letter-spacing: 0.02em;
-    color: #fff;
-  }
-  .lang-row { display: flex; gap: 6px; }
-  .lang-btn {
-    padding: 5px 13px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.3);
-    background: transparent;
-    color: rgba(255,255,255,0.7);
-    font-size: 12px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all .15s;
-    letter-spacing: 0.02em;
-  }
-  .lang-btn:hover { color: #fff; border-color: rgba(255,255,255,0.7); }
-  .lang-btn.active { background: #fff; color: var(--text); border-color: #fff; }
-
-  /* Container */
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 32px 20px 64px;
-  }
-
-  /* Screens */
-  .screen { display: none; }
-  .screen.active { display: block; }
-
-  /* Welcome screen */
-  .welcome-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-hint);
-    margin-bottom: 12px;
-  }
-  .welcome-title {
-    font-size: 30px;
-    font-weight: normal;
-    line-height: 1.25;
-    color: var(--text);
-    margin-bottom: 16px;
-  }
-  .welcome-sub {
-    font-size: 16px;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 24px;
-  }
-  .disclaimer {
-    background: var(--blue-bg);
-    border: 1px solid var(--blue-border);
-    border-radius: var(--radius-sm);
-    padding: 12px 16px;
-    font-size: 13px;
-    color: var(--blue-text);
-    line-height: 1.6;
-    margin-bottom: 28px;
-    font-family: system-ui, -apple-system, sans-serif;
-  }
-
-  /* Progress */
-  .prog-wrap { margin-bottom: 24px; }
-  .prog-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--text-hint);
-    margin-bottom: 8px;
-    font-family: system-ui, sans-serif;
-    letter-spacing: 0.02em;
-  }
-  .prog-bar { height: 2px; background: var(--border); border-radius: 2px; }
-  .prog-fill { height: 2px; background: var(--text); border-radius: 2px; transition: width .35s ease; }
-
-  /* Question card */
-  .q-block { margin-bottom: 8px; }
-  .q-label {
-    font-size: 20px;
-    line-height: 1.4;
-    color: var(--text);
-    margin-bottom: 8px;
-    font-weight: normal;
-  }
-  .q-hint {
-    font-size: 13px;
-    color: var(--text-hint);
-    margin-bottom: 18px;
-    line-height: 1.5;
-    font-family: system-ui, sans-serif;
-  }
-
-  /* Options */
-  .opt {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 12px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: border-color .15s, background .15s;
-    background: var(--surface);
-    font-size: 14px;
-    color: var(--text);
-    font-family: system-ui, sans-serif;
-    line-height: 1.5;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  .opt:hover { border-color: var(--border-mid); }
-  .opt.selected { border-color: var(--text); background: #f5f4f0; }
-  .opt input { margin-top: 3px; accent-color: var(--text); flex-shrink: 0; }
-  .opt-sublabel { font-size: 12px; color: var(--text-hint); margin-top: 2px; }
-
-  /* Date input */
-  .date-input {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 11px 14px;
-    font-size: 15px;
-    color: var(--text);
-    background: var(--surface);
-    width: 100%;
-    max-width: 280px;
-    font-family: system-ui, sans-serif;
-    outline: none;
-    transition: border-color .15s;
-  }
-  .date-input:focus { border-color: var(--text); }
-
-  /* Nav buttons */
-  .btn-row { display: flex; gap: 10px; margin-top: 20px; }
-  .btn-primary {
-    background: var(--text);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 11px 22px;
-    font-size: 14px;
-    cursor: pointer;
-    font-family: system-ui, sans-serif;
-    letter-spacing: 0.02em;
-    transition: opacity .15s;
-  }
-  .btn-primary:hover { opacity: .85; }
-  .btn-primary:disabled { opacity: .35; cursor: not-allowed; }
-  .btn-secondary {
-    background: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 11px 20px;
-    font-size: 14px;
-    cursor: pointer;
-    font-family: system-ui, sans-serif;
-    transition: all .15s;
-  }
-  .btn-secondary:hover { border-color: var(--border-mid); color: var(--text); }
-  .btn-large {
-    padding: 13px 28px;
-    font-size: 15px;
-  }
-
-  /* Results */
-  .results-title {
-    font-size: 26px;
-    font-weight: normal;
-    margin-bottom: 20px;
-    color: var(--text);
-  }
-
-  /* Alert boxes */
-  .alert {
-    border-radius: var(--radius-sm);
-    padding: 12px 16px;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 12px;
-    font-family: system-ui, sans-serif;
-  }
-  .alert strong { font-weight: 600; }
-  .alert-warn { background: var(--warn-bg); border: 1px solid var(--warn-border); color: var(--warn-text); }
-  .alert-danger { background: var(--danger-bg); border: 1px solid var(--danger-border); color: var(--danger-text); }
-  .alert-info { background: var(--blue-bg); border: 1px solid var(--blue-border); color: var(--blue-text); }
-  .alert-success { background: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-text); }
-
-  /* Countdown */
-  .countdown {
-    background: var(--danger-bg);
-    border: 1px solid var(--danger-border);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  .countdown-num {
-    font-size: 48px;
-    font-weight: normal;
-    color: var(--danger-text);
-    line-height: 1;
-    min-width: 64px;
-    font-variant-numeric: tabular-nums;
-  }
-  .countdown-label { font-size: 14px; color: var(--danger-text); line-height: 1.5; font-family: system-ui, sans-serif; }
-  .countdown-label strong { display: block; font-size: 15px; margin-bottom: 2px; }
-
-  /* Section heading */
-  .section-label {
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-hint);
-    margin: 28px 0 12px;
-    font-family: system-ui, sans-serif;
-  }
-
-  /* Rights cards */
-  .right-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    margin-bottom: 10px;
-  }
-  .right-card-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 5px;
-    font-family: system-ui, sans-serif;
-  }
-  .right-card-body {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-family: system-ui, sans-serif;
-  }
-
-  /* Steps */
-  .step-item {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    margin-bottom: 16px;
-  }
-  .step-num {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: var(--text);
-    color: #fff;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-family: system-ui, sans-serif;
-    margin-top: 1px;
-  }
-  .step-body { font-family: system-ui, sans-serif; font-size: 14px; line-height: 1.6; color: var(--text); }
-  .step-body strong { font-weight: 600; }
-  .step-body a { color: var(--blue-text); text-decoration: none; }
-  .step-body a:hover { text-decoration: underline; }
-  .step-note { font-size: 12px; color: var(--text-hint); margin-top: 4px; font-style: italic; }
-
-  /* Doc checklist */
-  .doc-list { list-style: none; }
-  .doc-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--text);
-    font-family: system-ui, sans-serif;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border);
-    line-height: 1.5;
-  }
-  .doc-list li:last-child { border-bottom: none; }
-  .doc-list li::before {
-    content: '';
-    width: 14px;
-    height: 14px;
-    border: 1px solid var(--border-mid);
-    border-radius: 3px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  /* Links table */
-  .links-table { width: 100%; }
-  .link-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-family: system-ui, sans-serif;
-  }
-  .link-row:last-child { border-bottom: none; }
-  .link-name { font-size: 13px; color: var(--text); line-height: 1.5; }
-  .link-note { font-size: 11px; color: var(--text-hint); margin-top: 2px; }
-  .link-go {
-    font-size: 13px;
-    color: var(--blue-text);
-    text-decoration: none;
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding-top: 1px;
-  }
-  .link-go:hover { text-decoration: underline; }
-  .tag {
-    display: inline-block;
-    padding: 1px 7px;
-    border-radius: 10px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    margin-left: 6px;
-    vertical-align: middle;
-    font-family: system-ui, sans-serif;
-  }
-  .tag-free { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
-  .tag-urgent { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
-
-  /* Translation notice */
-  .translate-box {
-    border: 1px dashed var(--border-mid);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    margin-top: 20px;
-    font-family: system-ui, sans-serif;
-  }
-  .translate-box p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px; }
-  .translate-box a { font-size: 13px; color: var(--blue-text); text-decoration: none; }
-  .translate-box a:hover { text-decoration: underline; }
-
-  /* Legal note */
-  .legal-note {
-    font-size: 12px;
-    color: var(--text-hint);
-    line-height: 1.7;
-    margin-top: 24px;
-    font-family: system-ui, sans-serif;
-    border-top: 1px solid var(--border);
-    padding-top: 16px;
-  }
-
-  /* Footer */
-  .site-footer {
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-hint);
-    padding: 24px;
-    font-family: system-ui, sans-serif;
-    border-top: 1px solid var(--border);
-    margin-top: 40px;
-  }
-
-  @media (max-width: 480px) {
-    .welcome-title { font-size: 24px; }
-    .countdown { flex-direction: column; gap: 8px; }
-    .countdown-num { font-size: 40px; }
-    .btn-row { flex-direction: column; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f4ef;
+  --surface:#ffffff;
+  --border:#dddbd2;
+  --border-strong:#b8b5ab;
+  --text:#181715;
+  --muted:#68665e;
+  --hint:#a09d96;
+  --blue-bg:#e8f2fb;--blue-border:#aacde8;--blue-text:#0f3d6e;
+  --green-bg:#e6f5ec;--green-border:#8ecda8;--green-text:#0f4a23;
+  --amber-bg:#fdf4e0;--amber-border:#e8c96a;--amber-text:#6b4a00;
+  --red-bg:#fceeed;--red-border:#e8a8a3;--red-text:#6b1a16;
+  --r:8px;--r-lg:12px
+}
+body{font-family:Georgia,serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+.header{background:var(--text);color:#fff;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title{font-size:14px;font-weight:400;letter-spacing:.02em;color:#fff}
+.langs{display:flex;gap:6px}
+.lang{padding:4px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.25);background:transparent;color:rgba(255,255,255,.65);font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s}
+.lang:hover{color:#fff;border-color:rgba(255,255,255,.6)}
+.lang.on{background:#fff;color:var(--text);border-color:#fff}
+.wrap{max-width:700px;margin:0 auto;padding:36px 20px 72px}
+.screen{display:none}.screen.on{display:block}
+/* Welcome */
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--hint);margin-bottom:10px;font-family:system-ui,sans-serif}
+.headline{font-size:32px;font-weight:400;line-height:1.2;margin-bottom:14px}
+.sub{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:24px;font-family:system-ui,sans-serif}
+.notice{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:var(--r);padding:12px 16px;font-size:13px;color:var(--blue-text);line-height:1.6;margin-bottom:28px;font-family:system-ui,sans-serif}
+/* Progress */
+.prog-wrap{margin-bottom:22px}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--hint);margin-bottom:7px;font-family:system-ui,sans-serif;letter-spacing:.02em}
+.prog-bar{height:2px;background:var(--border);border-radius:2px}
+.prog-fill{height:2px;background:var(--text);border-radius:2px;transition:width .3s ease}
+/* Question */
+.q-text{font-size:20px;line-height:1.4;margin-bottom:8px}
+.q-hint{font-size:13px;color:var(--hint);margin-bottom:18px;font-family:system-ui,sans-serif;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+.opt{display:flex;align-items:flex-start;gap:11px;padding:11px 14px;border:1px solid var(--border);border-radius:var(--r);cursor:pointer;background:var(--surface);font-family:system-ui,sans-serif;font-size:14px;color:var(--text);line-height:1.5;transition:border-color .12s,background .12s;-webkit-user-select:none;user-select:none}
+.opt:hover{border-color:var(--border-strong)}
+.opt.sel{border-color:var(--text);background:#f0efe9}
+.opt input{margin-top:3px;accent-color:var(--text);flex-shrink:0}
+.opt-sub{font-size:12px;color:var(--hint);margin-top:2px}
+.date-in{border:1px solid var(--border);border-radius:var(--r);padding:11px 14px;font-size:15px;color:var(--text);background:var(--surface);width:100%;max-width:280px;font-family:system-ui,sans-serif;outline:none;transition:border-color .12s}
+.date-in:focus{border-color:var(--text)}
+/* Buttons */
+.btns{display:flex;gap:10px;margin-top:20px}
+.btn-p{background:var(--text);color:#fff;border:none;border-radius:var(--r);padding:11px 22px;font-size:14px;cursor:pointer;font-family:system-ui,sans-serif;letter-spacing:.02em;transition:opacity .12s}
+.btn-p:hover{opacity:.82}.btn-p:disabled{opacity:.32;cursor:not-allowed}
+.btn-p.lg{padding:13px 28px;font-size:15px}
+.btn-s{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:var(--r);padding:11px 20px;font-size:14px;cursor:pointer;font-family:system-ui,sans-serif;transition:all .12s}
+.btn-s:hover{border-color:var(--border-strong);color:var(--text)}
+/* Results */
+.r-title{font-size:26px;font-weight:400;margin-bottom:18px}
+.sec-lbl{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--hint);margin:26px 0 11px;font-family:system-ui,sans-serif}
+/* Alert boxes */
+.al{border-radius:var(--r);padding:12px 16px;font-size:14px;line-height:1.6;margin-bottom:11px;font-family:system-ui,sans-serif}
+.al strong{font-weight:600}
+.al-blue{background:var(--blue-bg);border:1px solid var(--blue-border);color:var(--blue-text)}
+.al-green{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green-text)}
+.al-amber{background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber-text)}
+.al-red{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red-text)}
+/* Countdown */
+.cd{background:var(--red-bg);border:1px solid var(--red-border);border-radius:var(--r-lg);padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:20px}
+.cd-n{font-size:52px;font-weight:400;color:var(--red-text);line-height:1;min-width:72px;font-variant-numeric:tabular-nums}
+.cd-l{font-size:14px;color:var(--red-text);line-height:1.5;font-family:system-ui,sans-serif}
+.cd-l strong{display:block;font-size:15px;margin-bottom:3px}
+/* Right cards */
+.rc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 16px;margin-bottom:9px}
+.rc-t{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;font-family:system-ui,sans-serif}
+.rc-b{font-size:13px;color:var(--muted);line-height:1.6;font-family:system-ui,sans-serif}
+.rc-b a{color:var(--blue-text);text-decoration:none}.rc-b a:hover{text-decoration:underline}
+/* Steps */
+.step{display:flex;gap:13px;align-items:flex-start;margin-bottom:15px}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--text);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-family:system-ui,sans-serif}
+.step-b{font-family:system-ui,sans-serif;font-size:14px;line-height:1.6;color:var(--text)}
+.step-b strong{font-weight:600}
+.step-b a{color:var(--blue-text);text-decoration:none}.step-b a:hover{text-decoration:underline}
+.step-note{font-size:12px;color:var(--hint);margin-top:4px;font-style:italic}
+/* Checklist */
+.cl{list-style:none}
+.cl li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text);font-family:system-ui,sans-serif;padding:6px 0;border-bottom:1px solid var(--border);line-height:1.5}
+.cl li:last-child{border-bottom:none}
+.cl li::before{content:'';width:14px;height:14px;border:1px solid var(--border-strong);border-radius:3px;flex-shrink:0;margin-top:2px}
+/* Links */
+.lk-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-family:system-ui,sans-serif}
+.lk-row:last-child{border-bottom:none}
+.lk-name{font-size:13px;color:var(--text);line-height:1.5}
+.lk-note{font-size:11px;color:var(--hint);margin-top:2px}
+.lk-go{font-size:13px;color:var(--blue-text);text-decoration:none;white-space:nowrap;flex-shrink:0;padding-top:1px}
+.lk-go:hover{text-decoration:underline}
+.tag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.04em;margin-left:6px;vertical-align:middle;font-family:system-ui,sans-serif}
+.tag-free{background:var(--green-bg);color:var(--green-text);border:1px solid var(--green-border)}
+.tag-urgent{background:var(--red-bg);color:var(--red-text);border:1px solid var(--red-border)}
+/* Translation box */
+.tr-box{border:1px dashed var(--border-strong);border-radius:var(--r);padding:14px 16px;margin-top:18px;font-family:system-ui,sans-serif}
+.tr-box p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.tr-box a{font-size:13px;color:var(--blue-text);text-decoration:none}.tr-box a:hover{text-decoration:underline}
+/* Legal note */
+.legal{font-size:12px;color:var(--hint);line-height:1.7;margin-top:22px;font-family:system-ui,sans-serif;border-top:1px solid var(--border);padding-top:14px}
+/* Footer */
+footer{text-align:center;font-size:12px;color:var(--hint);padding:22px;font-family:system-ui,sans-serif;border-top:1px solid var(--border);margin-top:40px}
+@media(max-width:480px){.headline{font-size:25px}.cd{flex-direction:column;gap:8px}.cd-n{font-size:40px}.btns{flex-direction:column}}
 </style>
 </head>
 <body>
-
-<header class="site-header">
-  <h1 id="site-title">Estonia — Know Your Rights After Termination</h1>
-  <div class="lang-row">
-    <button class="lang-btn active" onclick="setLang('en')">English</button>
-    <button class="lang-btn" onclick="setLang('et')">Eesti</button>
-    <button class="lang-btn" onclick="setLang('ru')">Русский</button>
+<header class="header">
+  <span class="header-title" id="ht">Estonia — Know Your Rights After Termination</span>
+  <div class="langs">
+    <button class="lang on" onclick="setLang('en')">English</button>
+    <button class="lang" onclick="setLang('et')">Eesti</button>
+    <button class="lang" onclick="setLang('ru')">Русский</button>
   </div>
 </header>
-
-<div class="container">
-
-  <!-- WELCOME SCREEN -->
-  <div id="screen-welcome" class="screen active">
-    <p class="welcome-eyebrow" id="txt-eyebrow">Estonian Employment Law</p>
-    <h2 class="welcome-title" id="txt-headline">Do you think you were wrongfully fired?</h2>
-    <p class="welcome-sub" id="txt-sub">This tool helps workers in Estonia understand their rights after termination — in plain language, no legal background needed. Answer 8 questions and get your rights, next steps, and all relevant official links.</p>
-    <div class="disclaimer" id="txt-disclaimer">
-      ℹ️ This tool explains the law as it stands. It is not legal advice. For your specific case, contact the Labour Inspectorate (Tööinspektsioon) or a qualified lawyer.
-    </div>
-    <button class="btn-primary btn-large" onclick="startQuestionnaire()" id="btn-start">Start — takes 2 minutes →</button>
+<div class="wrap">
+  <div id="s-welcome" class="screen on">
+    <p class="eyebrow" id="w-ey">Estonian Employment Law</p>
+    <h1 class="headline" id="w-h">Do you think you were wrongfully fired?</h1>
+    <p class="sub" id="w-s">Answer the questions below and get a plain-language summary of your legal rights, exact next steps, a document checklist, and official contacts — all based on current Estonian law.</p>
+    <div class="notice" id="w-n">ℹ This tool explains the law. It is not legal advice. For your specific case, contact the Labour Inspectorate (Tööinspektsioon) or a qualified lawyer.</div>
+    <button class="btn-p lg" onclick="startQ()" id="w-btn">Start — takes 3 minutes →</button>
   </div>
-
-  <!-- QUESTIONS SCREEN -->
-  <div id="screen-questions" class="screen">
+  <div id="s-q" class="screen">
     <div class="prog-wrap">
-      <div class="prog-meta">
-        <span id="prog-label">Question 1 of 8</span>
-        <span id="prog-pct">12%</span>
-      </div>
-      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:12%"></div></div>
+      <div class="prog-top"><span id="p-lbl">Question 1 of 12</span><span id="p-pct">8%</span></div>
+      <div class="prog-bar"><div class="prog-fill" id="p-fill" style="width:8%"></div></div>
     </div>
-    <div id="question-container" class="q-block"></div>
-    <div class="btn-row">
-      <button class="btn-secondary" id="btn-back" onclick="prevQ()" style="display:none">← Back</button>
-      <button class="btn-primary" id="btn-next" onclick="nextQ()" disabled>Continue →</button>
+    <div id="q-box"></div>
+    <div class="btns">
+      <button class="btn-s" id="q-back" onclick="prevQ()" style="display:none">← Back</button>
+      <button class="btn-p" id="q-next" onclick="nextQ()" disabled>Continue →</button>
     </div>
   </div>
-
-  <!-- RESULTS SCREEN -->
-  <div id="screen-results" class="screen">
-    <div id="results-content"></div>
-  </div>
-
+  <div id="s-results" class="screen"><div id="r-box"></div></div>
 </div>
-
-<footer class="site-footer">
-  Based on the Estonian Employment Contracts Act (töölepingu seadus) and Labour Dispute Resolution Act. Last verified March 2026.
-</footer>
-
+<footer id="footer-txt">Based on the Estonian Employment Contracts Act (in force 13.02.2026) and Labour Dispute Resolution Act. Last verified March 2026.</footer>
 <script>
-const QUESTIONS = {
-  en: [
-    {
-      id: "contract_type",
-      q: "What type of employment contract did you have?",
-      hint: "Check your contract if unsure — this affects your notice entitlements",
-      opts: [
-        { val: "permanent", label: "Permanent / open-ended contract", hint: "No end date — the most common type" },
-        { val: "fixed", label: "Fixed-term contract", hint: "A specific end date was written in the contract" },
-        { val: "probation", label: "I was on probation", hint: "Typically the first 4 months of a new job" },
-        { val: "unknown", label: "I'm not sure / no written contract" }
-      ]
-    },
-    {
-      id: "tenure",
-      q: "How long had you worked for this employer?",
-      hint: "Your length of service determines how much notice you were legally owed",
-      opts: [
-        { val: "lt1", label: "Less than 1 year" },
-        { val: "1to5", label: "1 to 5 years" },
-        { val: "5to10", label: "5 to 10 years" },
-        { val: "gt10", label: "More than 10 years" }
-      ]
-    },
-    {
-      id: "notice",
-      q: "Did your employer give you written notice before terminating you?",
-      hint: "By law, termination must be in writing. Verbal-only dismissal has no legal effect.",
-      opts: [
-        { val: "yes_enough", label: "Yes — I received a written termination notice in advance" },
-        { val: "yes_short", label: "Yes — but I think the notice period was too short" },
-        { val: "no_written", label: "No written notice — done verbally or by phone/message only" },
-        { val: "immediate", label: "I was dismissed immediately with no notice at all" }
-      ]
-    },
-    {
-      id: "reason",
-      q: "What reason were you given for the termination?",
-      opts: [
-        { val: "redundancy", label: "Redundancy / restructuring / economic reasons" },
-        { val: "performance", label: "Poor performance or inability to do the job" },
-        { val: "misconduct", label: "Misconduct or violation of workplace rules" },
-        { val: "no_reason", label: "No reason was given" },
-        { val: "pressure_resign", label: "I was pressured to resign 'voluntarily'" },
-        { val: "other", label: "Other / I don't know" }
-      ]
-    },
-    {
-      id: "protected",
-      q: "Were you in any of these protected situations when you were terminated?",
-      hint: "Select all that apply — employers face a very high legal bar to fire protected workers",
-      multi: true,
-      opts: [
-        { val: "pregnant", label: "Pregnant or on maternity / pregnancy leave" },
-        { val: "parental", label: "On parental leave or raising a child under 3" },
-        { val: "sick", label: "On sick leave or temporary incapacity" },
-        { val: "union_rep", label: "Employee representative or trade union member" },
-        { val: "military", label: "On military or alternative service" },
-        { val: "none", label: "None of the above" }
-      ]
-    },
-    {
-      id: "discrimination",
-      q: "Do you believe discrimination played a role in your termination?",
-      opts: [
-        { val: "gender", label: "Gender or pregnancy-related" },
-        { val: "nationality", label: "Nationality, ethnicity, race, or language" },
-        { val: "age", label: "Age (too old or too young)" },
-        { val: "disability", label: "Disability or health condition" },
-        { val: "union", label: "Trade union membership" },
-        { val: "other_disc", label: "Other (religion, beliefs, sexual orientation, etc.)" },
-        { val: "no_disc", label: "No, I don't think discrimination was involved" }
-      ]
-    },
-    {
-      id: "severance",
-      q: "Were you offered or paid any severance pay?",
-      opts: [
-        { val: "paid_correct", label: "Yes — I was paid severance" },
-        { val: "offered_low", label: "Something was offered but it seemed too low" },
-        { val: "nothing", label: "No severance was offered or paid" },
-        { val: "unsure", label: "I'm not sure what I'm entitled to" }
-      ]
-    },
-    {
-      id: "termination_date",
-      q: "When did you receive the termination notice (or when were you told you were fired)?",
-      hint: "You have 30 days from this date to challenge your termination at the Labour Dispute Committee or court. This is a hard deadline.",
-      type: "date"
-    }
-  ],
-  et: [
-    {
-      id: "contract_type",
-      q: "Millist tüüpi töölepingut teil oli?",
-      hint: "Vaadake lepingust üle — see mõjutab teie etteteatamisõigusi",
-      opts: [
-        { val: "permanent", label: "Tähtajatu tööleping", hint: "Ilma lõppkuupäevata — kõige levinum" },
-        { val: "fixed", label: "Tähtajaline tööleping", hint: "Lepingus oli kirjas konkreetne lõppkuupäev" },
-        { val: "probation", label: "Olin katseajal", hint: "Tavaliselt uue töö esimesed 4 kuud" },
-        { val: "unknown", label: "Ma ei ole kindel / mul ei olnud kirjalikku lepingut" }
-      ]
-    },
-    {
-      id: "tenure",
-      q: "Kui kaua töötasite selle tööandja juures?",
-      hint: "Teie tööstaaž määrab, kui pikk etteteatamisaeg teile seaduslikult kuulus",
-      opts: [
-        { val: "lt1", label: "Vähem kui 1 aasta" },
-        { val: "1to5", label: "1 kuni 5 aastat" },
-        { val: "5to10", label: "5 kuni 10 aastat" },
-        { val: "gt10", label: "Rohkem kui 10 aastat" }
-      ]
-    },
-    {
-      id: "notice",
-      q: "Kas tööandja andis teile enne vallandamist kirjaliku etteteatamise?",
-      hint: "Seaduse järgi peab vallandamine olema kirjalik. Suuline vallandamine on tühine.",
-      opts: [
-        { val: "yes_enough", label: "Jah — sain eelnevalt kirjaliku vallandamisteate" },
-        { val: "yes_short", label: "Jah — aga etteteatamisaeg tundus liiga lühike" },
-        { val: "no_written", label: "Kirjalikku teatist ei olnud — tehti suuliselt või sõnumiga" },
-        { val: "immediate", label: "Mind vallandati kohe, ilma igasuguse etteteatamiseta" }
-      ]
-    },
-    {
-      id: "reason",
-      q: "Mis põhjust vallandamiseks anti?",
-      opts: [
-        { val: "redundancy", label: "Koondamine / ümberkorraldamine / majanduslikud põhjused" },
-        { val: "performance", label: "Kehv töö või ebasobivus ametikohale" },
-        { val: "misconduct", label: "Rikkumine või tööreeglite eiramine" },
-        { val: "no_reason", label: "Põhjust ei antud" },
-        { val: "pressure_resign", label: "Mind survestati &lsquo;omal soovil&rsquo; lahkuma" },
-        { val: "other", label: "Muu / ei tea" }
-      ]
-    },
-    {
-      id: "protected",
-      q: "Kas olite vallandamisel mõnes kaitstud olukorras?",
-      hint: "Valige kõik sobivad — tööandjatel on väga kõrge õiguslik lävi kaitstud töötajate vallandamiseks",
-      multi: true,
-      opts: [
-        { val: "pregnant", label: "Rase või rasedus-/sünnituspuhkusel" },
-        { val: "parental", label: "Lapsehoolduspuhkusel või kasvatab alla 3-aastast last" },
-        { val: "sick", label: "Haiguslehel või ajutiselt töövõimetu" },
-        { val: "union_rep", label: "Töötajate esindaja või ametiühingu liige" },
-        { val: "military", label: "Kaitseväe- või asendusteenistuses" },
-        { val: "none", label: "Ükski ülalnimetatud" }
-      ]
-    },
-    {
-      id: "discrimination",
-      q: "Kas usute, et diskrimineerimine mängis teie vallandamises rolli?",
-      opts: [
-        { val: "gender", label: "Soo või rasedusega seotud" },
-        { val: "nationality", label: "Rahvus, etnilisus, rass või keel" },
-        { val: "age", label: "Vanus (liiga vana või liiga noor)" },
-        { val: "disability", label: "Puue või terviseseisund" },
-        { val: "union", label: "Ametiühingu liikmesus" },
-        { val: "other_disc", label: "Muu (usk, veendumused, seksuaalne sättumus jne)" },
-        { val: "no_disc", label: "Ei, ma ei usu, et diskrimineerimine oli seotud" }
-      ]
-    },
-    {
-      id: "severance",
-      q: "Kas teile pakuti või maksti hüvitist?",
-      opts: [
-        { val: "paid_correct", label: "Jah — sain hüvitist" },
-        { val: "offered_low", label: "Pakuti midagi, aga tundus liiga vähe" },
-        { val: "nothing", label: "Hüvitist ei pakutud ega makstud" },
-        { val: "unsure", label: "Ei ole kindel, millele mul õigus on" }
-      ]
-    },
-    {
-      id: "termination_date",
-      q: "Millal saite vallandamisteate (või millal teid vallandati)?",
-      hint: "Teil on 30 päeva sellest kuupäevast alates, et vaidlustada vallandamine töövaidluskomisjonis või kohtus. See on range tähtaeg.",
-      type: "date"
-    }
-  ],
-  ru: [
-    {
-      id: "contract_type",
-      q: "Какой тип трудового договора у вас был?",
-      hint: "Уточните по договору — это влияет на ваши права на уведомление",
-      opts: [
-        { val: "permanent", label: "Бессрочный трудовой договор", hint: "Без конечной даты — самый распространённый" },
-        { val: "fixed", label: "Срочный трудовой договор", hint: "В договоре была указана конкретная дата окончания" },
-        { val: "probation", label: "Я был на испытательном сроке", hint: "Обычно первые 4 месяца новой работы" },
-        { val: "unknown", label: "Не знаю / не было письменного договора" }
-      ]
-    },
-    {
-      id: "tenure",
-      q: "Как долго вы проработали у этого работодателя?",
-      hint: "Ваш стаж определяет, какое уведомление вам было положено по закону",
-      opts: [
-        { val: "lt1", label: "Менее 1 года" },
-        { val: "1to5", label: "От 1 до 5 лет" },
-        { val: "5to10", label: "От 5 до 10 лет" },
-        { val: "gt10", label: "Более 10 лет" }
-      ]
-    },
-    {
-      id: "notice",
-      q: "Дал ли работодатель письменное уведомление об увольнении?",
-      hint: "По закону увольнение должно быть в письменной форме. Устное увольнение юридически недействительно.",
-      opts: [
-        { val: "yes_enough", label: "Да — получил письменное уведомление заранее" },
-        { val: "yes_short", label: "Да — но срок уведомления кажется слишком коротким" },
-        { val: "no_written", label: "Нет письменного уведомления — только устно или по телефону/сообщению" },
-        { val: "immediate", label: "Уволили немедленно, без какого-либо уведомления" }
-      ]
-    },
-    {
-      id: "reason",
-      q: "Какая причина увольнения была вам сообщена?",
-      opts: [
-        { val: "redundancy", label: "Сокращение / реструктуризация / экономические причины" },
-        { val: "performance", label: "Низкая производительность или несоответствие должности" },
-        { val: "misconduct", label: "Нарушение правил или дисциплины на рабочем месте" },
-        { val: "no_reason", label: "Причина не была указана" },
-        { val: "pressure_resign", label: "Меня вынудили уволиться \"по собственному желанию\"" },
-        { val: "other", label: "Другое / не знаю" }
-      ]
-    },
-    {
-      id: "protected",
-      q: "Находились ли вы в одной из этих защищённых ситуаций при увольнении?",
-      hint: "Выберите все подходящие — для увольнения защищённых работников закон устанавливает очень высокую планку",
-      multi: true,
-      opts: [
-        { val: "pregnant", label: "Беременность или декретный отпуск" },
-        { val: "parental", label: "Отпуск по уходу за ребёнком или воспитание ребёнка до 3 лет" },
-        { val: "sick", label: "Больничный или временная нетрудоспособность" },
-        { val: "union_rep", label: "Представитель работников или член профсоюза" },
-        { val: "military", label: "Военная или альтернативная служба" },
-        { val: "none", label: "Ни одно из вышеперечисленного" }
-      ]
-    },
-    {
-      id: "discrimination",
-      q: "Считаете ли вы, что дискриминация повлияла на ваше увольнение?",
-      opts: [
-        { val: "gender", label: "Пол или беременность" },
-        { val: "nationality", label: "Национальность, этническое происхождение, раса или язык" },
-        { val: "age", label: "Возраст (слишком старый или молодой)" },
-        { val: "disability", label: "Инвалидность или состояние здоровья" },
-        { val: "union", label: "Членство в профсоюзе" },
-        { val: "other_disc", label: "Другое (религия, убеждения, сексуальная ориентация и т.д.)" },
-        { val: "no_disc", label: "Нет, я не считаю, что дискриминация была" }
-      ]
-    },
-    {
-      id: "severance",
-      q: "Было ли вам предложено или выплачено выходное пособие?",
-      opts: [
-        { val: "paid_correct", label: "Да — получил выходное пособие" },
-        { val: "offered_low", label: "Что-то предложили, но кажется слишком мало" },
-        { val: "nothing", label: "Выходное пособие не предлагалось и не выплачивалось" },
-        { val: "unsure", label: "Не уверен, что мне положено" }
-      ]
-    },
-    {
-      id: "termination_date",
-      q: "Когда вы получили уведомление об увольнении (или когда вас уволили)?",
-      hint: "У вас есть 30 дней с этой даты, чтобы оспорить увольнение в Комиссии по трудовым спорам или суде. Это жёсткий срок.",
-      type: "date"
-    }
-  ]
+"use strict";
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const QS = {
+en:[
+{id:"contract",q:"What type of employment contract did you have?",hint:"This affects your notice entitlements and challenge rights",opts:[
+  {v:"permanent",l:"Permanent / open-ended contract",s:"No end date — the most common type"},
+  {v:"fixed",l:"Fixed-term contract",s:"A specific end date was written in the contract"},
+  {v:"probation",l:"I was on probation (within first 4 months)",s:"Probationary period — different rules apply"},
+  {v:"informal",l:"No written contract / informal work",s:"You still have rights — employment can be implied by conduct"},
+  {v:"unknown",l:"I am not sure"}
+]},
+{id:"tenure",q:"How long had you worked for this employer?",hint:"Your service length determines your statutory notice entitlement",opts:[
+  {v:"lt1",l:"Less than 1 year"},
+  {v:"1to5",l:"1 to 5 years"},
+  {v:"5to10",l:"5 to 10 years"},
+  {v:"gt10",l:"More than 10 years"}
+]},
+{id:"notice_form",q:"How was the termination communicated to you?",hint:"Estonian law requires termination in a reproducible written format (e-mail counts). Verbal-only dismissal is legally void.",opts:[
+  {v:"written_advance",l:"Written notice given in advance (letter, e-mail, or signed document)"},
+  {v:"written_immediate",l:"Written notice given, but effective immediately with no notice period"},
+  {v:"verbal_only",l:"Verbal only — by phone call or in person, nothing in writing"},
+  {v:"message_only",l:"Text message or chat message only"},
+  {v:"unclear",l:"I received something but I am not sure if it counts as proper notice"}
+]},
+{id:"notice_length",q:"If you received written notice — was the notice period long enough?",hint:"Estonian law sets minimum notice periods based on your length of service",opts:[
+  {v:"seemed_correct",l:"I think the notice period was correct or longer than required"},
+  {v:"too_short",l:"The notice period was shorter than I believe I was entitled to"},
+  {v:"none",l:"No notice period — I was told to leave immediately"},
+  {v:"na",l:"Not applicable — no written notice was given"}
+]},
+{id:"reason",q:"What reason were you given for the termination?",hint:"Employers must always provide a written reason — failure to do so is a procedural violation",opts:[
+  {v:"redundancy",l:"Redundancy / restructuring / economic reasons / lay-off"},
+  {v:"performance",l:"Long-term incapacity or inability to perform the role"},
+  {v:"misconduct",l:"Misconduct or breach of duties (with or without prior warnings)"},
+  {v:"probation_fail",l:"Failed probationary period"},
+  {v:"no_reason",l:"No reason was given at all"},
+  {v:"mutual",l:"Described as mutual agreement but I felt pressured"},
+  {v:"pressure_resign",l:"I was pressured to resign voluntarily"},
+  {v:"refused_change",l:"I refused a unilateral change to my contract or conditions"},
+  {v:"other",l:"Other reason or I am not sure"}
+]},
+{id:"warning",q:"Before you were fired, did your employer give you a prior written warning?",hint:"For dismissals based on misconduct or poor performance, a prior warning is generally legally required before termination",opts:[
+  {v:"yes_warning",l:"Yes — I received at least one formal written warning before being dismissed"},
+  {v:"no_warning",l:"No — I was dismissed without any prior written warning"},
+  {v:"verbal_warning",l:"Only a verbal warning, nothing in writing"},
+  {v:"na_warning",l:"Not applicable — I was made redundant or fired for a different reason"}
+]},
+{id:"alt_work",q:"If you were made redundant — did your employer offer you any alternative work first?",hint:"Before a lay-off, employers must offer the employee any available alternative work, including retraining if needed",opts:[
+  {v:"yes_offered",l:"Yes — alternative work was offered but I declined or it was unsuitable"},
+  {v:"no_offered",l:"No — no alternative work was offered before the redundancy"},
+  {v:"not_applicable",l:"Not applicable — I was not dismissed for economic/redundancy reasons"}
+]},
+{id:"protected",q:"Were you in any of these protected situations when terminated?",hint:"Select all that apply — employers face a very high legal bar to dismiss protected employees",multi:true,opts:[
+  {v:"pregnant",l:"Pregnant or on maternity / pregnancy leave"},
+  {v:"parental",l:"On parental leave or raising a child under 3"},
+  {v:"child3",l:"Single parent or sole caregiver of a child under 3"},
+  {v:"sick_short",l:"On short-term sick leave or temporary incapacity"},
+  {v:"union_rep",l:"Elected employee representative, trustee, or trade union representative"},
+  {v:"military",l:"On military service, alternative service, or reserve service"},
+  {v:"reported_violation",l:"Had recently reported a workplace safety violation or exercised a legal right"},
+  {v:"requested_flex",l:"Had recently requested flexible working conditions"},
+  {v:"none",l:"None of the above"}
+]},
+{id:"discrimination",q:"Do you believe any form of discrimination was a factor in your termination?",opts:[
+  {v:"gender",l:"Gender, pregnancy, or family obligations"},
+  {v:"nationality",l:"Nationality, ethnicity, race, language, or skin colour"},
+  {v:"age",l:"Age (considered too old or too young)"},
+  {v:"disability",l:"Disability, health condition, or reduced work capacity"},
+  {v:"union",l:"Trade union membership or activity"},
+  {v:"religion",l:"Religion, beliefs, or political views"},
+  {v:"sexual_orientation",l:"Sexual orientation or gender identity"},
+  {v:"no_disc",l:"No — I do not believe discrimination was involved"},
+  {v:"unsure_disc",l:"I am not sure"}
+]},
+{id:"final_pay",q:"Have you received all money owed to you after termination?",hint:"On the last day, employers must pay all wages earned, unused holiday compensation, and any other due amounts",multi:true,opts:[
+  {v:"wages_unpaid",l:"Unpaid wages or salary (for days already worked)"},
+  {v:"holiday_unpaid",l:"Unused annual holiday compensation not paid out"},
+  {v:"notice_unpaid",l:"Notice period pay not compensated"},
+  {v:"severance_unpaid",l:"Redundancy severance not paid"},
+  {v:"all_paid",l:"Everything has been paid — I have no outstanding payment disputes"},
+  {v:"unsure_pay",l:"I am not sure what I am entitled to"}
+]},
+{id:"contingent",q:"Was the termination notice linked to a condition or future event?",hint:"Conditional or contingent termination is void under Estonian law — the notice must be definite and immediate",opts:[
+  {v:"contingent_yes",l:"Yes — for example, 'you are fired if X happens' or 'unless you agree to Y'"},
+  {v:"contingent_no",l:"No — the termination was stated as definite"},
+  {v:"not_sure_cond",l:"I am not sure"}
+]},
+{id:"term_date",q:"When did you receive the termination notice (or when were you dismissed)?",hint:"Two critical deadlines run from this date: 30 days to challenge the termination, and 4 months for broader employment rights claims",type:"date"}
+],
+et:[
+{id:"contract",q:"Millist tüüpi töölepingut teil oli?",hint:"See mõjutab teie etteteatamis- ja vaidlustamisõigusi",opts:[
+  {v:"permanent",l:"Tähtajatu tööleping",s:"Ilma lõppkuupäevata — kõige levinum"},
+  {v:"fixed",l:"Tähtajaline tööleping",s:"Lepingus oli kirjas konkreetne lõppkuupäev"},
+  {v:"probation",l:"Olin katseajal (esimese 4 kuu jooksul)",s:"Katseaeg — kehtivad erireeglid"},
+  {v:"informal",l:"Kirjalikku lepingut ei olnud / mitteformaalne töö",s:"Teil on siiski õigused — töösuhe võib tuleneda käitumisest"},
+  {v:"unknown",l:"Ma ei ole kindel"}
+]},
+{id:"tenure",q:"Kui kaua töötasite selle tööandja juures?",hint:"Teie tööstaaž määrab seadusliku etteteatamistähtaja",opts:[
+  {v:"lt1",l:"Vähem kui 1 aasta"},
+  {v:"1to5",l:"1 kuni 5 aastat"},
+  {v:"5to10",l:"5 kuni 10 aastat"},
+  {v:"gt10",l:"Rohkem kui 10 aastat"}
+]},
+{id:"notice_form",q:"Kuidas vallandamisest teid teavitati?",hint:"Eesti seadus nõuab vallandamist kirjalikku vormi taasesitatavas formaadis (e-kiri on piisav). Ainult suuline vallandamine on õiguslikult tühine.",opts:[
+  {v:"written_advance",l:"Kirjalik etteteatamine edaspidi (kiri, e-kiri või allkirjastatud dokument)"},
+  {v:"written_immediate",l:"Kirjalik teatis anti, kuid jõustus kohe ilma etteteatamisperioodita"},
+  {v:"verbal_only",l:"Ainult suuliselt — telefoni teel või isiklikult, midagi kirjalikult ei ole"},
+  {v:"message_only",l:"Ainult tekstisõnum või vestlussõnum"},
+  {v:"unclear",l:"Sain midagi, kuid ei ole kindel, kas see loeb korralikuks etteteatamiseks"}
+]},
+{id:"notice_length",q:"Kui saite kirjaliku teatise — kas etteteatamisperiood oli piisavalt pikk?",hint:"Eesti seadus sätestab minimaalsed etteteatamistähtajad vastavalt teie tööstaažile",opts:[
+  {v:"seemed_correct",l:"Arvan, et etteteatamisperiood oli korrektne või pikem kui nõutud"},
+  {v:"too_short",l:"Etteteatamisperiood oli lühem, kui usun end õigustama olevat"},
+  {v:"none",l:"Etteteatamisperioodi ei olnud — kästi kohe lahkuda"},
+  {v:"na",l:"Ei kohaldu — kirjalikku etteteatamist ei antud"}
+]},
+{id:"reason",q:"Mis põhjust vallandamiseks teile anti?",hint:"Tööandjad peavad alati andma kirjaliku põhjenduse — selle puudumine on menetlusrikkumine",opts:[
+  {v:"redundancy",l:"Koondamine / ümberkorraldamine / majanduslikud põhjused"},
+  {v:"performance",l:"Pikaajaline töövõimetus või suutmatus ametikohustusi täita"},
+  {v:"misconduct",l:"Rikkumine või kohustuste eiramine (koos või ilma eelhoiatuseta)"},
+  {v:"probation_fail",l:"Katseaja eesmärki ei täidetud"},
+  {v:"no_reason",l:"Põhjust üldse ei antud"},
+  {v:"mutual",l:"Esitati vastastikuse kokkuleppena, kuid tundsin survet"},
+  {v:"pressure_resign",l:"Mind survestati omal soovil lahkuma"},
+  {v:"refused_change",l:"Keeldusin ühepoolsest lepingu või töötingimuste muutmisest"},
+  {v:"other",l:"Muu põhjus või ma ei ole kindel"}
+]},
+{id:"warning",q:"Kas tööandja andis teile enne vallandamist kirjaliku hoiatuse?",hint:"Rikkumise või nõrga tulemuslikkuse tõttu vallandamise korral on eelhoiatus seaduse järgi üldjuhul nõutav",opts:[
+  {v:"yes_warning",l:"Jah — sain enne vallandamist vähemalt ühe ametliku kirjaliku hoiatuse"},
+  {v:"no_warning",l:"Ei — vallandati ilma igasuguse eelhoiatuseta"},
+  {v:"verbal_warning",l:"Ainult suuline hoiatus, midagi kirjalikult pole"},
+  {v:"na_warning",l:"Ei kohaldu — koondati või vallandati muul põhjusel"}
+]},
+{id:"alt_work",q:"Kui teid koondati — kas tööandja pakkus enne alternatiivset tööd?",hint:"Enne koondamist peab tööandja pakkuma töötajale kõiki olemasolevaid alternatiivseid töökohti, sealhulgas vajadusel ümberõpet",opts:[
+  {v:"yes_offered",l:"Jah — alternatiivset tööd pakuti, kuid keeldusin või see ei sobinud"},
+  {v:"no_offered",l:"Ei — enne koondamist ei pakutud alternatiivset tööd"},
+  {v:"not_applicable",l:"Ei kohaldu — mind ei koondatud majanduslikel põhjustel"}
+]},
+{id:"protected",q:"Kas olite vallandamisel mõnes kaitstud olukorras?",hint:"Valige kõik sobivad — tööandjatel on väga kõrge lävi kaitstud töötajate vallandamiseks",multi:true,opts:[
+  {v:"pregnant",l:"Rase või rasedus-/sünnituspuhkusel"},
+  {v:"parental",l:"Lapsehoolduspuhkusel või kasvatab alla 3-aastast last"},
+  {v:"child3",l:"Üksikvanem või ainus hooldaja, kelle laps on alla 3 aasta"},
+  {v:"sick_short",l:"Lühiajalisel haiguslehel või ajutiselt töövõimetu"},
+  {v:"union_rep",l:"Valitud töötajate esindaja, usaldusisik või ametiühingu esindaja"},
+  {v:"military",l:"Kaitseväeteenistuses, asendusteenistuses või reservõppekogunemisel"},
+  {v:"reported_violation",l:"Oli hiljuti teatanud tööohutuse rikkumisest või kasutanud seaduslikku õigust"},
+  {v:"requested_flex",l:"Oli hiljuti taotlenud paindlikku töökorraldust"},
+  {v:"none",l:"Ükski ülalnimetatud"}
+]},
+{id:"discrimination",q:"Kas usute, et teie vallandamisel mängis rolli mingi diskrimineerimine?",opts:[
+  {v:"gender",l:"Sugu, rasedus või perekondlikud kohustused"},
+  {v:"nationality",l:"Rahvus, etnilisus, rass, keel või nahavärvus"},
+  {v:"age",l:"Vanus (peetud liiga vanaks või liiga nooreks)"},
+  {v:"disability",l:"Puue, terviseseisund või vähenenud töövõime"},
+  {v:"union",l:"Ametiühingu liikmesus või tegevus"},
+  {v:"religion",l:"Usk, veendumused või poliitilised vaated"},
+  {v:"sexual_orientation",l:"Seksuaalne sättumus või sooline identiteet"},
+  {v:"no_disc",l:"Ei — ma ei usu, et diskrimineerimine oli seotud"},
+  {v:"unsure_disc",l:"Ma ei ole kindel"}
+]},
+{id:"final_pay",q:"Kas olete saanud kõik teile pärast vallandamist võlgnetavad summad?",hint:"Viimasel päeval peab tööandja maksma kõik teenitud palgad, kasutamata puhkusehüvitise ja muud tähtajal nõutavad summad",multi:true,opts:[
+  {v:"wages_unpaid",l:"Maksmata palgad või töötasud (juba töötatud päevade eest)"},
+  {v:"holiday_unpaid",l:"Kasutamata iga-aastase puhkuse hüvitis ei ole välja makstud"},
+  {v:"notice_unpaid",l:"Etteteatamisperioodiga seotud hüvitis pole makstud"},
+  {v:"severance_unpaid",l:"Koondamishüvitis on maksmata"},
+  {v:"all_paid",l:"Kõik on makstud — rahaliseid vaidlusi ei ole"},
+  {v:"unsure_pay",l:"Ma ei ole kindel, millele mul õigus on"}
+]},
+{id:"contingent",q:"Kas vallandamisteatis oli seotud mingite tingimuste või tulevaste sündmustega?",hint:"Tingimuslik vallandamine on Eesti seaduse alusel tühine — teatis peab olema kindel ja vahetu",opts:[
+  {v:"contingent_yes",l:"Jah — näiteks 'olete vallandatud, kui X juhtub' või 'kui te ei nõustu Y-ga'"},
+  {v:"contingent_no",l:"Ei — vallandamine esitati lõpliku ja tingimusteta otsusena"},
+  {v:"not_sure_cond",l:"Ma ei ole kindel"}
+]},
+{id:"term_date",q:"Millal saite vallandamisteate (või millal teid vallandati)?",hint:"Sellest kuupäevast algab kaks kriitilist tähtaega: 30 päeva vallandamise vaidlustamiseks ja 4 kuud laiemateks tööõiguse nõueteks",type:"date"}
+],
+ru:[
+{id:"contract",q:"Какой тип трудового договора у вас был?",hint:"Это влияет на ваши права на уведомление и оспаривание",opts:[
+  {v:"permanent",l:"Бессрочный трудовой договор",s:"Без конечной даты — самый распространённый"},
+  {v:"fixed",l:"Срочный трудовой договор",s:"В договоре была указана конкретная дата окончания"},
+  {v:"probation",l:"Я был на испытательном сроке (в первые 4 месяца)",s:"Испытательный срок — действуют другие правила"},
+  {v:"informal",l:"Письменного договора не было / неформальная работа",s:"Права сохраняются — трудовые отношения могут подразумеваться поведением сторон"},
+  {v:"unknown",l:"Я не уверен"}
+]},
+{id:"tenure",q:"Как долго вы проработали у этого работодателя?",hint:"Ваш стаж определяет установленный законом срок уведомления",opts:[
+  {v:"lt1",l:"Менее 1 года"},
+  {v:"1to5",l:"От 1 до 5 лет"},
+  {v:"5to10",l:"От 5 до 10 лет"},
+  {v:"gt10",l:"Более 10 лет"}
+]},
+{id:"notice_form",q:"Как вам сообщили об увольнении?",hint:"Эстонский закон требует уведомления в воспроизводимой письменной форме (электронная почта засчитывается). Только устное увольнение юридически недействительно.",opts:[
+  {v:"written_advance",l:"Письменное уведомление заранее (письмо, электронная почта или подписанный документ)"},
+  {v:"written_immediate",l:"Письменное уведомление дано, но вступает в силу немедленно без периода уведомления"},
+  {v:"verbal_only",l:"Только устно — по телефону или лично, ничего в письменной форме"},
+  {v:"message_only",l:"Только текстовое или чат-сообщение"},
+  {v:"unclear",l:"Я что-то получил, но не уверен, считается ли это надлежащим уведомлением"}
+]},
+{id:"notice_length",q:"Если вы получили письменное уведомление — был ли срок уведомления достаточным?",hint:"Эстонский закон устанавливает минимальные сроки уведомления в зависимости от стажа",opts:[
+  {v:"seemed_correct",l:"Думаю, срок уведомления был правильным или длиннее требуемого"},
+  {v:"too_short",l:"Срок уведомления был короче, чем я считаю положенным"},
+  {v:"none",l:"Никакого срока уведомления — сказали уйти немедленно"},
+  {v:"na",l:"Не применимо — письменного уведомления не поступало"}
+]},
+{id:"reason",q:"Какую причину увольнения вам назвали?",hint:"Работодатели всегда обязаны предоставить письменное обоснование — отсутствие является процессуальным нарушением",opts:[
+  {v:"redundancy",l:"Сокращение / реструктуризация / экономические причины"},
+  {v:"performance",l:"Длительная нетрудоспособность или невозможность выполнять обязанности"},
+  {v:"misconduct",l:"Нарушение или неисполнение обязанностей (с предупреждением или без)"},
+  {v:"probation_fail",l:"Не прошёл испытательный срок"},
+  {v:"no_reason",l:"Причина вообще не была названа"},
+  {v:"mutual",l:"Представлено как взаимное соглашение, но я чувствовал давление"},
+  {v:"pressure_resign",l:"Меня вынудили уволиться по собственному желанию"},
+  {v:"refused_change",l:"Я отказался от одностороннего изменения договора или условий труда"},
+  {v:"other",l:"Другая причина или я не уверен"}
+]},
+{id:"warning",q:"Давал ли работодатель письменное предупреждение до вашего увольнения?",hint:"При увольнении за нарушение или низкую производительность предварительное письменное предупреждение, как правило, требуется по закону",opts:[
+  {v:"yes_warning",l:"Да — получил хотя бы одно официальное письменное предупреждение до увольнения"},
+  {v:"no_warning",l:"Нет — уволен без какого-либо предварительного письменного предупреждения"},
+  {v:"verbal_warning",l:"Только устное предупреждение, ничего в письменной форме"},
+  {v:"na_warning",l:"Не применимо — уволен по сокращению или иной причине"}
+]},
+{id:"alt_work",q:"Если вас сократили — предлагал ли работодатель сначала другую работу?",hint:"До сокращения работодатель обязан предложить работнику все имеющиеся вакансии, включая переобучение при необходимости",opts:[
+  {v:"yes_offered",l:"Да — альтернативная работа была предложена, но я отказался или она не подходила"},
+  {v:"no_offered",l:"Нет — до сокращения альтернативная работа не предлагалась"},
+  {v:"not_applicable",l:"Не применимо — я был уволен не по экономическим причинам"}
+]},
+{id:"protected",q:"Находились ли вы в одной из этих защищённых ситуаций при увольнении?",hint:"Выберите все подходящие — для увольнения защищённых работников закон устанавливает очень высокую планку",multi:true,opts:[
+  {v:"pregnant",l:"Беременность или декретный отпуск"},
+  {v:"parental",l:"Отпуск по уходу за ребёнком или воспитание ребёнка до 3 лет"},
+  {v:"child3",l:"Одинокий родитель или единственный опекун ребёнка до 3 лет"},
+  {v:"sick_short",l:"Краткосрочный больничный или временная нетрудоспособность"},
+  {v:"union_rep",l:"Избранный представитель работников, доверенное лицо или профсоюзный представитель"},
+  {v:"military",l:"Военная, альтернативная служба или резервные сборы"},
+  {v:"reported_violation",l:"Недавно сообщил о нарушении охраны труда или воспользовался законным правом"},
+  {v:"requested_flex",l:"Недавно запросил гибкие условия труда"},
+  {v:"none",l:"Ни одно из вышеперечисленного"}
+]},
+{id:"discrimination",q:"Считаете ли вы, что при вашем увольнении имела место дискриминация?",opts:[
+  {v:"gender",l:"Пол, беременность или семейные обязательства"},
+  {v:"nationality",l:"Национальность, этническое происхождение, раса, язык или цвет кожи"},
+  {v:"age",l:"Возраст (считался слишком старым или молодым)"},
+  {v:"disability",l:"Инвалидность, состояние здоровья или сниженная трудоспособность"},
+  {v:"union",l:"Членство в профсоюзе или профсоюзная деятельность"},
+  {v:"religion",l:"Вероисповедание, убеждения или политические взгляды"},
+  {v:"sexual_orientation",l:"Сексуальная ориентация или гендерная идентичность"},
+  {v:"no_disc",l:"Нет — я не считаю, что дискриминация была"},
+  {v:"unsure_disc",l:"Я не уверен"}
+]},
+{id:"final_pay",q:"Получили ли вы все деньги, причитающиеся вам после увольнения?",hint:"В последний день работодатель обязан выплатить всю заработанную зарплату, компенсацию за неиспользованный отпуск и прочие причитающиеся суммы",multi:true,opts:[
+  {v:"wages_unpaid",l:"Невыплаченная зарплата (за уже отработанные дни)"},
+  {v:"holiday_unpaid",l:"Компенсация за неиспользованный ежегодный отпуск не выплачена"},
+  {v:"notice_unpaid",l:"Компенсация за период уведомления не выплачена"},
+  {v:"severance_unpaid",l:"Выходное пособие при сокращении не выплачено"},
+  {v:"all_paid",l:"Всё выплачено — финансовых споров нет"},
+  {v:"unsure_pay",l:"Я не уверен, что мне положено"}
+]},
+{id:"contingent",q:"Было ли уведомление об увольнении связано с какими-либо условиями или будущими событиями?",hint:"Условное увольнение недействительно по эстонскому закону — уведомление должно быть определённым и немедленным",opts:[
+  {v:"contingent_yes",l:"Да — например, 'вы уволены, если произойдёт X' или 'если вы не согласитесь с Y'"},
+  {v:"contingent_no",l:"Нет — увольнение было представлено как окончательное без условий"},
+  {v:"not_sure_cond",l:"Я не уверен"}
+]},
+{id:"term_date",q:"Когда вы получили уведомление об увольнении (или когда вас уволили)?",hint:"С этой даты начинают течь два критических срока: 30 дней для оспаривания увольнения и 4 месяца для более широких требований из трудовых отношений",type:"date"}
+]
 };
 
-const UI = {
-  en: {
-    siteTitle: "Estonia — Know Your Rights After Termination",
-    eyebrow: "Estonian Employment Law",
-    headline: "Do you think you were wrongfully fired?",
-    sub: "This tool helps workers in Estonia understand their rights after termination — in plain language, no legal background needed. Answer 8 questions and get your rights, next steps, and all relevant official links.",
-    disclaimer: "ℹ️ This tool explains the law as it stands. It is not legal advice. For your specific case, contact the Labour Inspectorate (Tööinspektsioon) or a qualified lawyer.",
-    btnStart: "Start — takes 2 minutes →",
-    progLabel: (n,t) => `Question ${n} of ${t}`,
-    btnBack: "← Back",
-    btnNext: "Continue →",
-    btnDone: "See my rights →",
-    btnRestart: "Start over",
-    resultsTitle: "Your rights & next steps",
-    daysLeftLabel: "days remaining to challenge your termination",
-    daysGoneTitle: "30-day challenge window has closed",
-    daysGoneBody: "The 30-day window to challenge your termination specifically at the Labour Dispute Committee or court has passed. However, a separate 4-month general limitation period applies for broader employment rights claims (Employment Contracts Act § 3¹) — speak to a lawyer urgently to understand what options remain.",
-    daysOkLabel: (n) => `${n} days left to challenge your termination at the Labour Dispute Committee or court.`,
-    protectedAlert: "You were in a legally protected category when terminated. Employers face a very high legal bar to fire protected workers — this is strong grounds to challenge.",
-    discAlert: "Discrimination may be involved. You have additional rights under the Equal Treatment Act. Contact the Gender Equality and Equal Treatment Commissioner in addition to the Labour Inspectorate.",
-    pressureAlert: "Warning: Signing a 'voluntary resignation' under pressure waives your right to challenge the termination and to severance pay. Do not sign anything without understanding what rights you give up.",
-    rightsTitle: "Your rights under Estonian law",
-    stepsTitle: "What to do — step by step",
-    docsTitle: "Document checklist — gather these now",
-    linksTitle: "Key contacts & official links",
-    legalNote: "This tool is based on the Estonian Employment Contracts Act (in force from 13.02.2026, RT I, 03.02.2026, 5) and the Labour Dispute Resolution Act. Two key deadlines: 30 days to challenge termination specifically; 4 months for broader employment rights claims (§ 3¹). Legal requirements may change — verify key details at riigiteataja.ee or with a qualified lawyer. Last verified March 2026.",
-    translateNote: "The Labour Dispute Committee application must be submitted in Estonian. If you need help, Tallinn Migration Centre offers free translation services for employment disputes.",
-    translateLink: "https://www.ti.ee/en/extrajudicial-proceeding-labor-disputes/how-submit-application/recourse-labour-dispute-committee",
-    translateLinkLabel: "Learn about the application process →"
-  },
-  et: {
-    siteTitle: "Eesti — Tundke oma õigusi pärast vallandamist",
-    eyebrow: "Eesti tööõigus",
-    headline: "Kas arvate, et teid vallandati ebaseaduslikult?",
-    sub: "See tööriist aitab Eesti töötajatel mõista oma õigusi pärast töölepingu lõpetamist — lihtsas keeles, ilma õigusliku taustata. Vastake 8 küsimusele ja saate oma õigused, järgmised sammud ja kõik olulised ametlikud lingid.",
-    disclaimer: "ℹ️ See tööriist selgitab seadust. See ei ole õigusnõuanne. Pöörduge tööinspektsiooni või kvalifitseeritud juristi poole.",
-    btnStart: "Alusta — võtab 2 minutit →",
-    progLabel: (n,t) => `Küsimus ${n} / ${t}`,
-    btnBack: "← Tagasi",
-    btnNext: "Jätka →",
-    btnDone: "Vaata minu õigusi →",
-    btnRestart: "Alusta uuesti",
-    resultsTitle: "Teie õigused ja järgmised sammud",
-    daysLeftLabel: "päeva jäänud vallandamise vaidlustamiseks",
-    daysGoneTitle: "30-päevane vaidlustamistähtaeg on möödunud",
-    daysGoneBody: "30-päevane tähtaeg vallandamise vaidlustamiseks töövaidluskomisjonis või kohtus on möödunud. Siiski kehtib üldiste tööõiguse nõuete jaoks eraldi 4-kuuline aegumistähtaeg (töölepingu seadus § 3¹) — pöörduge juristi poole kohe, et mõista, milliseid võimalusi on alles jäänud.",
-    daysOkLabel: (n) => `${n} päeva jäänud vallandamise vaidlustamiseks töövaidluskomisjonis või kohtus.`,
-    protectedAlert: "Olite vallandamisel seaduslikult kaitstud kategoorias. Tööandjatel on väga kõrge lävi kaitstud töötajate vallandamiseks — see on tugev alus vaidlustamiseks.",
-    discAlert: "Diskrimineerimine võib olla seotud. Teil on lisaõigused võrdse kohtlemise seaduse alusel. Võtke ühendust soolise võrdõiguslikkuse ja võrdse kohtlemise volinikuga lisaks tööinspektsioonile.",
-    pressureAlert: "Hoiatus: Surve all alla kirjutatud 'omal soovil lahkumise' avaldus loobub teie õigusest vaidlustada vallandamist ja hüvitisele. Ärge allkirjastage midagi ilma oma õigusi mõistmata.",
-    rightsTitle: "Teie õigused Eesti seaduste alusel",
-    stepsTitle: "Mida teha — samm-sammult",
-    docsTitle: "Dokumentide kontrollnimekiri — koguge need kohe",
-    linksTitle: "Peamised kontaktid ja ametlikud lingid",
-    legalNote: "See tööriist põhineb Eesti töölepingu seadusel (jõustunud 13.02.2026, RT I, 03.02.2026, 5) ja töövaidluse lahendamise seadusel. Kaks olulist tähtaega: 30 päeva vallandamise vaidlustamiseks; 4 kuud laiemateks tööõiguse nõueteks (§ 3¹). Nõuded võivad muutuda — kontrollige põhiandmeid aadressil riigiteataja.ee või kvalifitseeritud juristi juures. Viimati kontrollitud märts 2026.",
-    translateNote: "Töövaidluskomisjoni avaldus tuleb esitada eesti keeles. Kui vajate abi, pakub Tallinna Migratsioonikeskus tasuta tõlketeenuseid tööhõivevaidluste jaoks.",
-    translateLink: "https://www.ti.ee/en/extrajudicial-proceeding-labor-disputes/how-submit-application/recourse-labour-dispute-committee",
-    translateLinkLabel: "Lisateave avalduse esitamise kohta →"
-  },
-  ru: {
-    siteTitle: "Эстония — Знайте свои права после увольнения",
-    eyebrow: "Трудовое право Эстонии",
-    headline: "Вы считаете, что вас уволили незаконно?",
-    sub: "Этот инструмент помогает работникам в Эстонии понять свои права после увольнения — простым языком, без юридического образования. Ответьте на 8 вопросов и получите ваши права, следующие шаги и все соответствующие официальные ссылки.",
-    disclaimer: "ℹ️ Этот инструмент объясняет закон. Это не юридическая консультация. По вашему конкретному делу обратитесь в Трудовую инспекцию или к квалифицированному юристу.",
-    btnStart: "Начать — займёт 2 минуты →",
-    progLabel: (n,t) => `Вопрос ${n} из ${t}`,
-    btnBack: "← Назад",
-    btnNext: "Продолжить →",
-    btnDone: "Узнать мои права →",
-    btnRestart: "Начать заново",
-    resultsTitle: "Ваши права и следующие шаги",
-    daysLeftLabel: "дней осталось для оспаривания увольнения",
-    daysGoneTitle: "30-дневный срок оспаривания истёк",
-    daysGoneBody: "30-дневный срок для оспаривания вашего увольнения в Комиссии по трудовым спорам или суде истёк. Однако для более широких требований из трудовых отношений действует отдельный 4-месячный срок исковой давности (Закон о трудовом договоре § 3¹) — срочно проконсультируйтесь с юристом, чтобы понять, какие возможности остаются.",
-    daysOkLabel: (n) => `${n} дней осталось для оспаривания увольнения в Комиссии по трудовым спорам или суде.`,
-    protectedAlert: "При увольнении вы находились в законодательно защищённой категории. Для увольнения защищённых работников закон устанавливает очень высокую планку — это веское основание для оспаривания.",
-    discAlert: "Возможно, имела место дискриминация. У вас есть дополнительные права по Закону о равном обращении. Помимо Трудовой инспекции, обратитесь к Комиссару по гендерному равенству и равному обращению.",
-    pressureAlert: "Предупреждение: Подписание заявления об увольнении «по собственному желанию» под давлением лишает вас права оспорить увольнение и получить выходное пособие. Не подписывайте ничего, не понимая своих прав.",
-    rightsTitle: "Ваши права по законодательству Эстонии",
-    stepsTitle: "Что делать — шаг за шагом",
-    docsTitle: "Контрольный список документов — соберите их сейчас",
-    linksTitle: "Ключевые контакты и официальные ссылки",
-    legalNote: "Этот инструмент основан на Законе о трудовом договоре Эстонии (в силе с 13.02.2026, RT I, 03.02.2026, 5) и Законе о разрешении трудовых споров. Два ключевых срока: 30 дней для оспаривания увольнения; 4 месяца для более широких требований из трудовых отношений (§ 3¹). Требования могут меняться — проверяйте ключевые данные на riigiteataja.ee или у квалифицированного юриста. Последняя проверка: март 2026 г.",
-    translateNote: "Заявление в Комиссию по трудовым спорам должно быть подано на эстонском языке. Таллинский миграционный центр предлагает бесплатные услуги перевода для трудовых споров.",
-    translateLink: "https://www.ti.ee/en/extrajudicial-proceeding-labor-disputes/how-submit-application/recourse-labour-dispute-committee",
-    translateLinkLabel: "Подробнее о процессе подачи заявления →"
-  }
+const UI={
+en:{
+  ht:"Estonia — Know Your Rights After Termination",
+  ey:"Estonian Employment Law",wh:"Do you think you were wrongfully fired?",
+  ws:"Answer the questions below and get a plain-language summary of your legal rights, exact next steps, a document checklist, and official contacts — all based on current Estonian law.",
+  wn:"ℹ This tool explains the law. It is not legal advice. For your specific case, contact the Labour Inspectorate (Tööinspektsioon) or a qualified lawyer.",
+  wbtn:"Start — takes 3 minutes →",
+  pl:(n,t)=>`Question ${n} of ${t}`,
+  back:"← Back",next:"Continue →",done:"See my rights →",restart:"Start over",
+  rtitle:"Your rights & next steps",
+  ft:"Based on the Estonian Employment Contracts Act (in force 13.02.2026) and Labour Dispute Resolution Act. Last verified March 2026."
+},
+et:{
+  ht:"Eesti — Tundke oma õigusi pärast vallandamist",
+  ey:"Eesti tööõigus",wh:"Kas arvate, et teid vallandati ebaseaduslikult?",
+  ws:"Vastake alltoodud küsimustele ja saate lihtsas keeles kokkuvõtte oma seaduslikest õigustest, täpsetest järgmistest sammudest, dokumentide kontrollnimekirjast ja ametlikest kontaktidest — kõik põhineb kehtival Eesti seadusel.",
+  wn:"ℹ See tööriist selgitab seadust. See ei ole õigusnõuanne. Pöörduge tööinspektsiooni või kvalifitseeritud juristi poole.",
+  wbtn:"Alusta — võtab 3 minutit →",
+  pl:(n,t)=>`Küsimus ${n} / ${t}`,
+  back:"← Tagasi",next:"Jätka →",done:"Vaata minu õigusi →",restart:"Alusta uuesti",
+  rtitle:"Teie õigused ja järgmised sammud",
+  ft:"Põhineb Eesti töölepingu seadusel (jõustunud 13.02.2026) ja töövaidluse lahendamise seadusel. Viimati kontrollitud märts 2026."
+},
+ru:{
+  ht:"Эстония — Знайте свои права после увольнения",
+  ey:"Трудовое право Эстонии",wh:"Вы считаете, что вас уволили незаконно?",
+  ws:"Ответьте на вопросы ниже и получите изложение ваших законных прав, точных следующих шагов, контрольного списка документов и официальных контактов — всё на основе действующего законодательства Эстонии.",
+  wn:"ℹ Этот инструмент объясняет закон. Это не юридическая консультация. По вашему делу обратитесь в Трудовую инспекцию или к квалифицированному юристу.",
+  wbtn:"Начать — займёт 3 минуты →",
+  pl:(n,t)=>`Вопрос ${n} из ${t}`,
+  back:"← Назад",next:"Продолжить →",done:"Узнать мои права →",restart:"Начать заново",
+  rtitle:"Ваши права и следующие шаги",
+  ft:"Основано на Законе о трудовом договоре Эстонии (в силе с 13.02.2026) и Законе о разрешении трудовых споров. Последняя проверка: март 2026 г."
+}
 };
 
-const RIGHTS = {
-  noWrittenNotice: {
-    en: { title: "Verbal termination is legally void", body: "Estonian Employment Contracts Act § 95 requires termination to be in writing. A verbal dismissal, or one sent only by text or phone, has no legal effect. You can demand written confirmation — and the 30-day challenge deadline only starts running from when you receive valid written notice." },
-    et: { title: "Suuline vallandamine on seaduslikult tühine", body: "Töölepingu seaduse § 95 nõuab, et vallandamine oleks kirjalik. Suulisel vallandamisel või ainult sõnumiga/telefoni teel teatamisel pole õiguslikku jõudu. Saate nõuda kirjalikku kinnitust — ja 30-päevane vaidlustamistähtaeg hakkab jooksma alles pärast kehtiva kirjaliku teate saamist." },
-    ru: { title: "Устное увольнение юридически недействительно", body: "§ 95 Закона о трудовом договоре Эстонии требует письменной формы увольнения. Устное увольнение или переданное только по сообщению/телефону не имеет юридической силы. Вы можете потребовать письменного подтверждения — и 30-дневный срок оспаривания начинается только с момента получения действительного письменного уведомления." }
-  },
-  noticeRequired: {
-    lt1: {
-      en: { title: "You were entitled to 15 calendar days' notice", body: "For employment under 1 year, the law requires a minimum of 15 calendar days' advance notice. If you received less — or none at all — you may be owed notice-period pay." },
-      et: { title: "Teil oli õigus 15-kalendripäevasele etteteatamisele", body: "Alla 1-aastase töösuhte puhul nõuab seadus vähemalt 15-kalendripäevast etteteatamist. Kui saite vähem või üldse mitte, võidakse teile võlgneda etteteatamisperioodi tasu." },
-      ru: { title: "Вам полагалось уведомление за 15 календарных дней", body: "При стаже менее 1 года закон требует минимального уведомления за 15 календарных дней. Если вы получили меньше или ничего — вам может быть положена оплата за период уведомления." }
-    },
-    "1to5": {
-      en: { title: "You were entitled to 30 calendar days' notice", body: "For 1–5 years of employment, the law requires a minimum of 30 calendar days' advance notice. If you received less, you may be owed notice-period pay." },
-      et: { title: "Teil oli õigus 30-kalendripäevasele etteteatamisele", body: "1–5-aastase töösuhte puhul nõuab seadus vähemalt 30-kalendripäevast etteteatamist. Kui saite vähem, võidakse teile võlgneda etteteatamisperioodi tasu." },
-      ru: { title: "Вам полагалось уведомление за 30 календарных дней", body: "При стаже 1–5 лет закон требует минимального уведомления за 30 календарных дней. Если вы получили меньше — вам может быть положена оплата за период уведомления." }
-    },
-    "5to10": {
-      en: { title: "You were entitled to 60 calendar days' notice", body: "For 5–10 years of employment, the law requires a minimum of 60 calendar days' advance notice. If you received less, you may be owed notice-period pay." },
-      et: { title: "Teil oli õigus 60-kalendripäevasele etteteatamisele", body: "5–10-aastase töösuhte puhul nõuab seadus vähemalt 60-kalendripäevast etteteatamist. Kui saite vähem, võidakse teile võlgneda etteteatamisperioodi tasu." },
-      ru: { title: "Вам полагалось уведомление за 60 календарных дней", body: "При стаже 5–10 лет закон требует минимального уведомления за 60 календарных дней. Если вы получили меньше — вам может быть положена оплата за период уведомления." }
-    },
-    gt10: {
-      en: { title: "You were entitled to 90 calendar days' notice", body: "For 10+ years of employment, the law requires a minimum of 90 calendar days' advance notice. If you received less, you may be owed notice-period pay." },
-      et: { title: "Teil oli õigus 90-kalendripäevasele etteteatamisele", body: "Üle 10-aastase töösuhte puhul nõuab seadus vähemalt 90-kalendripäevast etteteatamist. Kui saite vähem, võidakse teile võlgneda etteteatamisperioodi tasu." },
-      ru: { title: "Вам полагалось уведомление за 90 календарных дней", body: "При стаже более 10 лет закон требует минимального уведомления за 90 календарных дней. Если вы получили меньше — вам может быть положена оплата за период уведомления." }
-    }
-  },
-  unfairComp: {
-    en: { title: "Compensation if termination was unlawful", body: "If your termination is found to be unlawful, the Labour Dispute Committee or court may award you compensation of up to 3 months' average wages (Employment Contracts Act § 109). The amount is set at the committee's or court's discretion based on circumstances — in practice, the full 3 months is commonly awarded. The termination is also legally deemed not to have taken place." },
-    et: { title: "Hüvitis, kui vallandamine oli ebaseaduslik", body: "Kui teie vallandamine leitakse olevat ebaseaduslik, võib töövaidluskomisjon või kohus mõista välja kuni 3 kuu keskmist palka (töölepingu seadus § 109). Summa määrab komisjon või kohus oma äranägemise järgi asjaoludest lähtuvalt — praktikas mõistetakse sageli välja täis 3 kuud. Vallandamist loetakse ka seaduslikult mittetoimunuks." },
-    ru: { title: "Компенсация при незаконном увольнении", body: "Если ваше увольнение будет признано незаконным, Комиссия по трудовым спорам или суд могут присудить вам компенсацию в размере до 3 среднемесячных заработных плат (Закон о трудовом договоре § 109). Размер устанавливается по усмотрению комиссии или суда с учётом обстоятельств — на практике нередко присуждается полная сумма за 3 месяца. Увольнение также считается юридически не имевшим места." }
-  },
-  reasonRequired: {
-    en: { title: "Your employer must justify the termination in writing", body: "Employers are required to provide a written reason for termination. If no reason was given or the reason was insufficient, this is a procedural violation and may affect the validity of the dismissal." },
-    et: { title: "Tööandja peab vallandamist kirjalikult põhjendama", body: "Tööandjad on kohustatud esitama vallandamise põhjuse kirjalikult. Kui põhjust ei antud või see oli ebapiisav, on tegemist menetlusrikkumisega, mis võib mõjutada vallandamise kehtivust." },
-    ru: { title: "Работодатель обязан письменно обосновать увольнение", body: "Работодатели обязаны предоставить письменное обоснование увольнения. Если причина не была указана или была недостаточной, это является процессуальным нарушением и может повлиять на действительность увольнения." }
-  },
-  redundancySeverance: {
-    en: { title: "Redundancy severance pay", body: "If you were made redundant, your employer must pay 1 month's average wage as severance. If you worked for 5 or more years, the Estonian Unemployment Insurance Fund (Töötukassa) pays an additional benefit on top of this. The Labour Dispute Committee handles redundancy claims of any size — large claims simply go through full panel proceedings rather than the simplified written procedure." },
-    et: { title: "Koondamishüvitis", body: "Koondamise korral peab tööandja maksma 1 kuu keskmise palga hüvitisena. Kui töötasite 5 või enam aastat, maksab Eesti Töötukassa täiendavat hüvitist. Töövaidluskomisjon lahendab igasuguse suurusega koondamisnõudeid — suured nõuded käsitletakse lihtsalt täismenetluses, mitte lihtsustatud kirjalikus menetluses." },
-    ru: { title: "Выходное пособие при сокращении", body: "При сокращении работодатель обязан выплатить выходное пособие в размере среднемесячной заработной платы за 1 месяц. При стаже 5 и более лет Касса по безработице (Töötukassa) выплачивает дополнительное пособие сверх этого. Комиссия по трудовым спорам рассматривает требования по сокращению любого размера — крупные требования просто рассматриваются в полном составе, а не в упрощённом письменном порядке." }
-  }
-};
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let lang="en", cur=0, ans={}, multi={};
 
-const STEPS = {
-  en: [
-    { title: "Gather your documents immediately", body: "Collect everything before memories fade: employment contract, last 3 months' payslips, written termination notice, any written warnings, all email/message correspondence with your employer, and work schedule records.", note: null },
-    { title: "Request written reasoning from your employer", body: "If you didn't receive a written reason for termination, email your employer requesting it. Use the subject line \"Request for written justification of termination\" and keep copies of everything you send.", note: null },
-    { title: "Contact the Labour Inspectorate — free advice", body: "Call <strong>+372 640 6000</strong> (Mon–Fri 09:00–15:00) or email <a href='mailto:ti@ti.ee'>ti@ti.ee</a>. They provide free legal advice on employment disputes and can investigate your employer if violations are found.", note: "You can report anonymously if you prefer" },
-    { title: "File with the Labour Dispute Committee", body: "This is <strong>free of charge</strong> — no state fees — and faster than court. Cases are typically resolved within 45 calendar days. The application must be submitted in Estonian. You can submit it by email to the relevant regional committee.", note: "For Tallinn disputes, email: info.tvk@ti.ee · Claims above €6,400 go through full panel proceedings rather than simplified written procedure — but the committee handles them all" },
-    { title: "Contact the Equal Treatment Commissioner (if discrimination involved)", body: "Email <a href='mailto:info@volinik.ee'>info@volinik.ee</a> or call <strong>+372 626 9059</strong>. This is a free, independent service. They can advise you and assist in submitting a discrimination complaint.", note: null },
-    { title: "Consider a lawyer for complex cases", body: "If your claim involves significant compensation, discrimination, or the employer is disputing everything, a labour law specialist can represent you at the Labour Dispute Committee or court.", note: null }
-  ],
-  et: [
-    { title: "Koguge oma dokumendid kohe", body: "Koguge kõik kokku, enne kui mälestused haihtuvad: tööleping, viimase 3 kuu palgalehed, kirjalik vallandamisteade, kirjalikud hoiatused, kogu e-posti/sõnumite kirjavahetus tööandjaga ja töögraafiku andmed.", note: null },
-    { title: "Nõudke tööandjalt kirjalikku põhjendust", body: "Kui te ei saanud kirjalikku vallandamise põhjust, saatke tööandjale e-kiri, milles palute seda. Kasutage teemat \"Vallandamise kirjaliku põhjenduse taotlus\" ja hoidke koopiad kõigest, mida saadate.", note: null },
-    { title: "Võtke ühendust Tööinspektsiooniga — tasuta nõustamine", body: "Helistage <strong>+372 640 6000</strong> (E–R 09:00–15:00) või saatke e-kiri <a href='mailto:ti@ti.ee'>ti@ti.ee</a>. Nad pakuvad tasuta õigusnõustamist tööhõivevaidlustes ja võivad teie tööandjat uurida, kui avastatakse rikkumisi.", note: "Soovi korral saate teatada anonüümselt" },
-    { title: "Esitage avaldus töövaidluskomisjonile", body: "See on <strong>tasuta</strong> — ilma riigilõivuta — ja kiirem kui kohus. Juhtumid lahendatakse tavaliselt 45 kalendripäeva jooksul. Avaldus tuleb esitada eesti keeles. Saate selle saata e-kirjaga vastavale piirkondlikule komisjonile.", note: "Tallinna vaidluste jaoks: info.tvk@ti.ee · Üle 6 400 euro suurused nõuded käsitletakse täismenetluses, mitte lihtsustatud kirjalikus menetluses — komisjon lahendab kõiki nõudeid" },
-    { title: "Võtke ühendust võrdõigusvolinikuga (kui diskrimineerimine on seotud)", body: "Saatke e-kiri <a href='mailto:info@volinik.ee'>info@volinik.ee</a> või helistage <strong>+372 626 9059</strong>. See on tasuta, sõltumatu teenus. Nad saavad teid nõustada ja aidata diskrimineerimiskaebuse esitamisel.", note: null },
-    { title: "Kaaluge juristi kaasamist keerulistes juhtumites", body: "Kui teie nõue hõlmab märkimisväärset hüvitist, diskrimineerimist või tööandja vaidlustab kõike, saab tööõigusele spetsialiseerunud jurist teid esindada töövaidluskomisjonis või kohtus.", note: null }
-  ],
-  ru: [
-    { title: "Немедленно соберите все документы", body: "Соберите всё, пока воспоминания свежи: трудовой договор, расчётные листки за последние 3 месяца, письменное уведомление об увольнении, все письменные предупреждения, всю переписку по электронной почте/сообщениям с работодателем и данные о рабочем времени.", note: null },
-    { title: "Запросите у работодателя письменное обоснование", body: "Если вы не получили письменную причину увольнения, направьте работодателю письмо с запросом. Укажите тему «Запрос письменного обоснования увольнения» и сохраняйте копии всего, что отправляете.", note: null },
-    { title: "Обратитесь в Трудовую инспекцию — бесплатная консультация", body: "Позвоните по номеру <strong>+372 640 6000</strong> (Пн–Пт 09:00–15:00) или напишите на <a href='mailto:ti@ti.ee'>ti@ti.ee</a>. Они предоставляют бесплатные юридические консультации по трудовым спорам и могут проверить вашего работодателя при обнаружении нарушений.", note: "При желании можно сообщить анонимно" },
-    { title: "Подайте заявление в Комиссию по трудовым спорам", body: "Это <strong>бесплатно</strong> — без государственной пошлины — и быстрее, чем суд. Дела обычно рассматриваются в течение 45 календарных дней. Заявление должно быть подано на эстонском языке. Вы можете отправить его по электронной почте в соответствующую региональную комиссию.", note: "По спорам в Таллинне: info.tvk@ti.ee · Требования свыше €6 400 рассматриваются в полном составе, а не в упрощённом письменном порядке — комиссия рассматривает требования любого размера" },
-    { title: "Обратитесь к Комиссару по равному обращению (если есть дискриминация)", body: "Напишите на <a href='mailto:info@volinik.ee'>info@volinik.ee</a> или позвоните <strong>+372 626 9059</strong>. Это бесплатная независимая служба. Они могут проконсультировать вас и помочь в подаче жалобы на дискриминацию.", note: null },
-    { title: "Рассмотрите возможность привлечения юриста для сложных дел", body: "Если ваше требование связано со значительной компенсацией, дискриминацией или работодатель всё оспаривает, специалист по трудовому праву может представлять вас в Комиссии по трудовым спорам или суде.", note: null }
-  ]
-};
-
-const DOCS = {
-  en: ["Employment contract (or evidence of employment if no written contract)", "Payslips for the last 3 months", "Written termination notice (or screenshot if delivered digitally)", "Any prior written warnings from employer", "All email and message correspondence related to the termination", "Work schedule records or timesheets", "Medical certificates (if health or sick leave was involved)", "Names and contact details of any witnesses"],
-  et: ["Tööleping (või tõend töösuhte kohta, kui kirjalikku lepingut ei olnud)", "Viimase 3 kuu palgalehed", "Kirjalik vallandamisteade (või ekraanipilt, kui edastati digitaalselt)", "Tööandja varasemad kirjalikud hoiatused", "Kogu e-posti- ja sõnumikirjavahetus seoses vallandamisega", "Töögraafiku andmed või tööajatabelid", "Meditsiinilised tõendid (kui tervis või haigusleht oli seotud)", "Tunnistajate nimed ja kontaktandmed"],
-  ru: ["Трудовой договор (или доказательства трудоустройства при отсутствии письменного договора)", "Расчётные листки за последние 3 месяца", "Письменное уведомление об увольнении (или скриншот при цифровой доставке)", "Все предшествующие письменные предупреждения от работодателя", "Вся переписка по электронной почте и сообщениям, связанная с увольнением", "Данные о рабочем времени или табели учёта рабочего времени", "Медицинские справки (если было задействовано здоровье или больничный)", "Имена и контактные данные свидетелей"]
-};
-
-const LINKS = [
-  {
-    en: { label: "Labour Inspectorate (Tööinspektsioon)", note: "+372 640 6000 · ti@ti.ee", tag: "free" },
-    et: { label: "Tööinspektsioon", note: "+372 640 6000 · ti@ti.ee", tag: "free" },
-    ru: { label: "Трудовая инспекция (Tööinspektsioon)", note: "+372 640 6000 · ti@ti.ee", tag: "free" },
-    url: "https://www.ti.ee/en"
-  },
-  {
-    en: { label: "Report a workplace violation (tip-off)", note: "Can be submitted anonymously", tag: "free" },
-    et: { label: "Teavita tööohutuse rikkumisest", note: "Saab esitada anonüümselt", tag: "free" },
-    ru: { label: "Сообщить о нарушении трудового законодательства", note: "Можно подать анонимно", tag: "free" },
-    url: "https://www.ti.ee/en/government-agency-news-and-contacts/contacts/reporting-violation-sending-tip"
-  },
-  {
-    en: { label: "Labour Dispute Committee — how to apply", note: "Free · No state fees · Resolved in 45 days", tag: "free" },
-    et: { label: "Töövaidluskomisjon — kuidas avaldust esitada", note: "Tasuta · Ilma riigilõivuta · Lahendatakse 45 päeva jooksul", tag: "free" },
-    ru: { label: "Комиссия по трудовым спорам — как подать заявление", note: "Бесплатно · Без государственной пошлины · Рассматривается в течение 45 дней", tag: "free" },
-    url: "https://www.ti.ee/en/extrajudicial-proceeding-labor-disputes/how-submit-application/recourse-labour-dispute-committee"
-  },
-  {
-    en: { label: "Employment Contracts Act — full legal text", note: "Riigi Teataja · Current version in force from 13.02.2026" },
-    et: { label: "Töölepingu seadus — täistekst", note: "Riigi Teataja · Kehtiv versioon alates 13.02.2026" },
-    ru: { label: "Закон о трудовом договоре — полный текст", note: "Riigi Teataja · Действующая редакция с 13.02.2026" },
-    url: "https://www.riigiteataja.ee/en/eli/ee/511022026002/consolide"
-  },
-  {
-    en: { label: "Gender Equality & Equal Treatment Commissioner", note: "info@volinik.ee · +372 626 9059 · For discrimination cases", tag: "free" },
-    et: { label: "Soolise võrdõiguslikkuse ja võrdse kohtlemise volinik", note: "info@volinik.ee · +372 626 9059 · Diskrimineerimisjuhtumite jaoks", tag: "free" },
-    ru: { label: "Комиссар по гендерному равенству и равному обращению", note: "info@volinik.ee · +372 626 9059 · По делам о дискриминации", tag: "free" },
-    url: "https://www.volinik.ee/en/"
-  },
-  {
-    en: { label: "Estonian Unemployment Insurance Fund (Töötukassa)", note: "Redundancy benefits, job support & retraining" },
-    et: { label: "Eesti Töötukassa", note: "Koondamishüvitised, töötugi ja ümberõpe" },
-    ru: { label: "Касса по безработице Эстонии (Töötukassa)", note: "Пособия по сокращению, поддержка занятости и переподготовка" },
-    url: "https://www.tootukassa.ee/en"
-  },
-  {
-    en: { label: "Working Life Portal — Labour Disputes guide", note: "tooelu.ee" },
-    et: { label: "Tööelu portaal — töövaidluste juhend", note: "tooelu.ee" },
-    ru: { label: "Портал трудовой жизни — руководство по трудовым спорам", note: "tooelu.ee" },
-    url: "https://www.tooelu.ee/en/58/labour-disputes"
-  }
-];
-
-let lang = 'en';
-let currentQ = 0;
-let answers = {};
-let multiSelected = {};
-
-function setLang(l) {
-  lang = l;
-  document.querySelectorAll('.lang-btn').forEach((b, i) => {
-    b.classList.toggle('active', ['en','et','ru'][i] === l);
-  });
-  const u = UI[l];
-  document.title = u.siteTitle;
-  document.getElementById('site-title').textContent = u.siteTitle;
-  document.getElementById('txt-eyebrow').textContent = u.eyebrow;
-  document.getElementById('txt-headline').textContent = u.headline;
-  document.getElementById('txt-sub').textContent = u.sub;
-  document.getElementById('txt-disclaimer').textContent = u.disclaimer;
-  document.getElementById('btn-start').textContent = u.btnStart;
-  if (document.getElementById('screen-questions').classList.contains('active')) renderQ(currentQ);
-  if (document.getElementById('screen-results').classList.contains('active')) showResults();
+// ─────────────────────────────────────────────
+// LANG
+// ─────────────────────────────────────────────
+function setLang(l){
+  lang=l;
+  document.querySelectorAll(".lang").forEach((b,i)=>b.classList.toggle("on",["en","et","ru"][i]===l));
+  const u=UI[l];
+  document.getElementById("ht").textContent=u.ht;
+  document.title=u.ht;
+  document.getElementById("w-ey").textContent=u.ey;
+  document.getElementById("w-h").textContent=u.wh;
+  document.getElementById("w-s").textContent=u.ws;
+  document.getElementById("w-n").textContent=u.wn;
+  document.getElementById("w-btn").textContent=u.wbtn;
+  document.getElementById("footer-txt").textContent=u.ft;
+  if(document.getElementById("s-q").classList.contains("on")) renderQ(cur);
+  if(document.getElementById("s-results").classList.contains("on")) showResults();
 }
 
-function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-' + name).classList.add('active');
-  window.scrollTo(0, 0);
-}
+// ─────────────────────────────────────────────
+// SCREENS
+// ─────────────────────────────────────────────
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));document.getElementById(id).classList.add("on");window.scrollTo(0,0)}
 
-function startQuestionnaire() {
-  answers = {};
-  multiSelected = {};
-  currentQ = 0;
-  showScreen('questions');
-  renderQ(0);
-}
+// ─────────────────────────────────────────────
+// QUESTIONNAIRE
+// ─────────────────────────────────────────────
+function startQ(){ans={};multi={};cur=0;show("s-q");renderQ(0)}
 
-function renderQ(idx) {
-  const u = UI[lang];
-  const qs = QUESTIONS[lang];
-  const q = qs[idx];
-  const total = qs.length;
-  const pct = Math.round(((idx + 1) / total) * 100);
+function renderQ(i){
+  const u=UI[lang], qs=QS[lang], q=qs[i], tot=qs.length;
+  const pct=Math.round(((i+1)/tot)*100);
+  document.getElementById("p-lbl").textContent=u.pl(i+1,tot);
+  document.getElementById("p-pct").textContent=pct+"%";
+  document.getElementById("p-fill").style.width=pct+"%";
+  document.getElementById("q-back").style.display=i>0?"inline-block":"none";
+  const nb=document.getElementById("q-next");
+  nb.textContent=i===tot-1?u.done:u.next;
+  nb.disabled=true;
 
-  document.getElementById('prog-label').textContent = u.progLabel(idx + 1, total);
-  document.getElementById('prog-pct').textContent = pct + '%';
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('btn-back').style.display = idx > 0 ? 'inline-block' : 'none';
+  let h=`<p class="q-text">${q.q}</p>`;
+  if(q.hint) h+=`<p class="q-hint">${q.hint}</p>`;
+  h+='<div class="opts">';
 
-  const nextBtn = document.getElementById('btn-next');
-  nextBtn.textContent = idx === total - 1 ? u.btnDone : u.btnNext;
-  nextBtn.disabled = true;
+  if(q.type==="date"){
+    const sv=ans[q.id]||"";
+    h=`<p class="q-text">${q.q}</p>${q.hint?`<p class="q-hint">${q.hint}</p>`:""}<input type="date" class="date-in" id="d-in" value="${sv}" onchange="onDate(this.value)">`;
+    document.getElementById("q-box").innerHTML=h;
+    if(sv) nb.disabled=false;
+    return;
+  }
 
-  let html = `<p class="q-label">${q.q}</p>`;
-  if (q.hint) html += `<p class="q-hint">${q.hint}</p>`;
-
-  if (q.type === 'date') {
-    const saved = answers[q.id] || '';
-    html += `<input type="date" class="date-input" id="date-input" value="${saved}" onchange="onDateChange(this.value)">`;
-    if (saved) nextBtn.disabled = false;
-  } else if (q.multi) {
-    if (!multiSelected[q.id]) multiSelected[q.id] = [];
-    q.opts.forEach(o => {
-      const checked = multiSelected[q.id].includes(o.val);
-      html += `<label class="opt${checked ? ' selected' : ''}">
-        <input type="checkbox" value="${o.val}" onchange="onMultiChange('${q.id}','${o.val}',this)" ${checked ? 'checked' : ''}>
-        <span>${o.label}</span>
-      </label>`;
+  if(q.multi){
+    if(!multi[q.id]) multi[q.id]=[];
+    q.opts.forEach(o=>{
+      const ck=multi[q.id].includes(o.v);
+      h+=`<label class="opt${ck?" sel":""}"><input type="checkbox" value="${o.v}" onchange="onMulti('${q.id}','${o.v}',this)" ${ck?"checked":""}><span>${o.l}</span></label>`;
     });
-    if (multiSelected[q.id].length > 0) nextBtn.disabled = false;
+    if(multi[q.id].length>0) nb.disabled=false;
   } else {
-    q.opts.forEach(o => {
-      const sel = answers[q.id] === o.val;
-      html += `<label class="opt${sel ? ' selected' : ''}">
-        <input type="radio" name="q${idx}" value="${o.val}" onchange="onRadioChange('${q.id}','${o.val}',this)" ${sel ? 'checked' : ''}>
-        <span>${o.label}${o.hint ? `<div class="opt-sublabel">${o.hint}</div>` : ''}</span>
-      </label>`;
+    q.opts.forEach(o=>{
+      const sel=ans[q.id]===o.v;
+      h+=`<label class="opt${sel?" sel":""}"><input type="radio" name="rq" value="${o.v}" onchange="onRadio('${q.id}','${o.v}',this)" ${sel?"checked":""}><span>${o.l}${o.s?`<div class="opt-sub">${o.s}</div>`:""}</span></label>`;
     });
-    if (answers[q.id]) nextBtn.disabled = false;
+    if(ans[q.id]) nb.disabled=false;
   }
-
-  document.getElementById('question-container').innerHTML = html;
+  h+="</div>";
+  document.getElementById("q-box").innerHTML=h;
 }
 
-function onRadioChange(qid, val, el) {
-  answers[qid] = val;
-  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
-  el.closest('.opt').classList.add('selected');
-  document.getElementById('btn-next').disabled = false;
+function onRadio(id,v,el){
+  ans[id]=v;
+  document.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel"));
+  el.closest(".opt").classList.add("sel");
+  document.getElementById("q-next").disabled=false;
 }
 
-function onMultiChange(qid, val, el) {
-  if (!multiSelected[qid]) multiSelected[qid] = [];
-  if (val === 'none') {
-    multiSelected[qid] = el.checked ? ['none'] : [];
-    document.querySelectorAll('.opt input[type=checkbox]').forEach(cb => {
-      if (cb.value !== 'none') { cb.checked = false; cb.closest('.opt').classList.remove('selected'); }
-    });
+function onMulti(id,v,el){
+  if(!multi[id]) multi[id]=[];
+  if(v==="none"){
+    multi[id]=el.checked?["none"]:[];
+    document.querySelectorAll(".opt input[type=checkbox]").forEach(c=>{if(c.value!=="none"){c.checked=false;c.closest(".opt").classList.remove("sel");}});
   } else {
-    multiSelected[qid] = multiSelected[qid].filter(v => v !== 'none');
-    const noneEl = document.querySelector('.opt input[value=none]');
-    if (noneEl) { noneEl.checked = false; noneEl.closest('.opt').classList.remove('selected'); }
-    if (el.checked) { if (!multiSelected[qid].includes(val)) multiSelected[qid].push(val); }
-    else { multiSelected[qid] = multiSelected[qid].filter(v => v !== val); }
+    multi[id]=multi[id].filter(x=>x!=="none");
+    const ne=document.querySelector('.opt input[value="none"]');
+    if(ne){ne.checked=false;ne.closest(".opt").classList.remove("sel");}
+    if(el.checked){if(!multi[id].includes(v)) multi[id].push(v);}
+    else multi[id]=multi[id].filter(x=>x!==v);
   }
-  el.closest('.opt').classList.toggle('selected', el.checked);
-  answers[qid] = multiSelected[qid];
-  document.getElementById('btn-next').disabled = multiSelected[qid].length === 0;
+  el.closest(".opt").classList.toggle("sel",el.checked);
+  ans[id]=multi[id];
+  document.getElementById("q-next").disabled=multi[id].length===0;
 }
 
-function onDateChange(val) {
-  const qs = QUESTIONS[lang];
-  answers[qs[currentQ].id] = val;
-  document.getElementById('btn-next').disabled = !val;
+function onDate(v){
+  const qs=QS[lang];
+  ans[qs[cur].id]=v;
+  document.getElementById("q-next").disabled=!v;
 }
 
-function nextQ() {
-  const qs = QUESTIONS[lang];
-  if (currentQ < qs.length - 1) { currentQ++; renderQ(currentQ); window.scrollTo(0,0); }
-  else { showResults(); }
+function nextQ(){const qs=QS[lang];if(cur<qs.length-1){cur++;renderQ(cur);}else{showResults();}}
+function prevQ(){if(cur>0){cur--;renderQ(cur);}}
+
+// ─────────────────────────────────────────────
+// RESULTS ENGINE
+// ─────────────────────────────────────────────
+function daysLeft(){
+  if(!ans.term_date) return null;
+  const d=new Date(ans.term_date); d.setDate(d.getDate()+30);
+  const t=new Date(); t.setHours(0,0,0,0);
+  return Math.ceil((d-t)/(864e5));
 }
-
-function prevQ() {
-  if (currentQ > 0) { currentQ--; renderQ(currentQ); window.scrollTo(0,0); }
+function months4Left(){
+  if(!ans.term_date) return null;
+  const d=new Date(ans.term_date); d.setMonth(d.getMonth()+4);
+  const t=new Date(); t.setHours(0,0,0,0);
+  return Math.ceil((d-t)/(864e5));
 }
-
-function getDaysLeft() {
-  if (!answers.termination_date) return null;
-  const fired = new Date(answers.termination_date);
-  const deadline = new Date(fired);
-  deadline.setDate(deadline.getDate() + 30);
-  const today = new Date(); today.setHours(0,0,0,0);
-  return Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+function noticeRequired(){
+  const m={"lt1":{d:15,l:"15 calendar days"},"1to5":{d:30,l:"30 calendar days"},"5to10":{d:60,l:"60 calendar days"},"gt10":{d:90,l:"90 calendar days"}};
+  return m[ans.tenure]||null;
 }
+function isProtected(){return Array.isArray(ans.protected)&&ans.protected.some(v=>v!=="none");}
+function isDisc(){return ans.discrimination&&ans.discrimination!=="no_disc"&&ans.discrimination!=="unsure_disc";}
+function hasUnpaidMoney(){return Array.isArray(ans.final_pay)&&ans.final_pay.some(v=>!["all_paid","unsure_pay"].includes(v));}
 
-function showResults() {
-  showScreen('results');
-  const u = UI[lang];
-  const daysLeft = getDaysLeft();
-  const isProtected = Array.isArray(answers.protected) && answers.protected.some(v => v !== 'none');
-  const isDisc = answers.discrimination && answers.discrimination !== 'no_disc';
-  const isPressure = answers.reason === 'pressure_resign';
-  const isVerbal = answers.notice === 'no_written' || answers.notice === 'immediate';
-  const isRedundancy = answers.reason === 'redundancy';
-  const notProbation = answers.contract_type !== 'probation';
+function showResults(){
+  show("s-results");
+  const u=UI[lang];
+  const dl=daysLeft(), m4=months4Left();
+  const prot=isProtected(), disc=isDisc(), unpaid=hasUnpaidMoney();
+  const nr=noticeRequired();
+  const isRedundancy=ans.reason==="redundancy";
+  const isMisconduct=["misconduct","probation_fail"].includes(ans.reason);
+  const isVerbal=["verbal_only","message_only"].includes(ans.notice_form);
+  const isPressure=["pressure_resign","mutual"].includes(ans.reason);
+  const isContingent=ans.contingent==="contingent_yes";
+  const noWarning=ans.warning==="no_warning"||ans.warning==="verbal_warning";
+  const noAltWork=ans.alt_work==="no_offered";
+  const noReason=ans.reason==="no_reason";
+  const refusedChange=ans.reason==="refused_change";
+  const notProbation=ans.contract!=="probation";
 
-  let html = `<h2 class="results-title">${u.resultsTitle}</h2>`;
+  let h=`<h2 class="r-title">${u.rtitle}</h2>`;
 
-  // Countdown
-  if (daysLeft !== null) {
-    if (daysLeft <= 0) {
-      html += `<div class="alert alert-danger"><strong>${u.daysGoneTitle}:</strong> ${u.daysGoneBody}</div>`;
-    } else if (daysLeft <= 10) {
-      html += `<div class="countdown"><div class="countdown-num">${daysLeft}</div><div class="countdown-label"><strong>days left — act now</strong>${u.daysLeftLabel}</div></div>`;
+  // ── DEADLINES ──
+  if(dl!==null){
+    if(dl<=0){
+      h+=`<div class="al al-red"><strong>${lang==="en"?"30-day challenge window closed":lang==="et"?"30-päevane vaidlustamistähtaeg on möödunud":"30-дневный срок оспаривания истёк"}</strong><br>${lang==="en"?"The window to challenge your specific termination at the Labour Dispute Committee has passed. However, a separate 4-month limitation period applies for broader employment rights claims (ECA § 3¹). Speak to a lawyer urgently about what options remain.":lang==="et"?"Vallandamise vaidlustamise tähtaeg töövaidluskomisjonis on möödunud. Siiski kehtib üldiste tööõiguse nõuete jaoks eraldi 4-kuuline aegumistähtaeg (TLS § 3¹). Pöörduge juristi poole kohe.":"Срок оспаривания увольнения истёк. Однако для общих трудовых требований действует отдельный 4-месячный срок давности (ЗТД § 3¹). Срочно проконсультируйтесь с юристом."}</div>`;
+    } else if(dl<=7){
+      h+=`<div class="cd"><div class="cd-n">${dl}</div><div class="cd-l"><strong>${lang==="en"?"days left — urgent":lang==="et"?"päeva jäänud — kiire":dl===1?"день остался — срочно":"дней осталось — срочно"}</strong>${lang==="en"?"to challenge your termination at the Labour Dispute Committee or court":lang==="et"?"vallandamise vaidlustamiseks töövaidluskomisjonis või kohtus":"для оспаривания увольнения в Комиссии по трудовым спорам или суде"}</div></div>`;
     } else {
-      html += `<div class="alert alert-warn">⚠️ <strong>${daysLeft} ${u.daysLeftLabel}.</strong> ${u.daysOkLabel(daysLeft)}</div>`;
+      h+=`<div class="al al-amber">⚠ <strong>${dl} ${lang==="en"?"days remaining":lang==="et"?"päeva jäänud":"дней осталось"}</strong> ${lang==="en"?"to challenge your termination (30-day deadline). A separate 4-month deadline applies for broader employment rights claims.":lang==="et"?"vallandamise vaidlustamiseks (30-päevane tähtaeg). Laiemateks tööõiguse nõueteks kehtib eraldi 4-kuuline tähtaeg.":"для оспаривания увольнения (30-дневный срок). Для более широких трудовых требований действует отдельный 4-месячный срок."}</div>`;
     }
   }
-
-  // Flags
-  if (isProtected) html += `<div class="alert alert-warn">🛡️ <strong>Protected category:</strong> ${u.protectedAlert}</div>`;
-  if (isDisc) html += `<div class="alert alert-warn">⚖️ <strong>Discrimination flag:</strong> ${u.discAlert}</div>`;
-  if (isPressure) html += `<div class="alert alert-danger">⚠️ <strong>Warning:</strong> ${u.pressureAlert}</div>`;
-
-  // Rights
-  html += `<p class="section-label">${u.rightsTitle}</p>`;
-
-  if (isVerbal) {
-    const r = RIGHTS.noWrittenNotice[lang];
-    html += `<div class="right-card"><div class="right-card-title">${r.title}</div><div class="right-card-body">${r.body}</div></div>`;
+  if(m4!==null&&m4>0&&dl!==null&&dl>0){
+    h+=`<div class="al al-blue">${lang==="en"?`Separate 4-month deadline: <strong>${m4} days</strong> remaining to file broader employment rights claims (wages, holiday pay, etc.) — Employment Contracts Act § 3¹. Wage claims specifically have a <strong>3-year</strong> limitation period.`:lang==="et"?`Eraldi 4-kuuline tähtaeg: <strong>${m4} päeva</strong> jäänud laiemaks tööõiguse nõueteks (palgad, puhkusehüvitis jne) — TLS § 3¹. Palganõuetel on eraldi <strong>3-aastane</strong> aegumistähtaeg.`:`Отдельный 4-месячный срок: <strong>${m4} дней</strong> осталось для подачи более широких трудовых требований (зарплата, отпускные и т.д.) — ЗТД § 3¹. Требования по зарплате имеют отдельный срок давности <strong>3 года</strong>.`}</div>`;
   }
 
-  if (notProbation && answers.tenure && RIGHTS.noticeRequired[answers.tenure]) {
-    const r = RIGHTS.noticeRequired[answers.tenure][lang];
-    html += `<div class="right-card"><div class="right-card-title">${r.title}</div><div class="right-card-body">${r.body}</div></div>`;
+  // ── PRIORITY FLAGS ──
+  if(prot) h+=`<div class="al al-amber">🛡 <strong>${lang==="en"?"You are in a legally protected category":lang==="et"?"Olete seaduslikult kaitstud kategoorias":"Вы находитесь в законодательно защищённой категории"}</strong><br>${lang==="en"?"Employers bear the burden of proving the dismissal was lawful. The law presumes your termination was unlawful — the employer must provide evidence otherwise.":lang==="et"?"Tööandjad peavad tõendama, et vallandamine oli seaduslik. Seadus eeldab, et teie vallandamine oli ebaseaduslik — tööandja peab esitama vastupidised tõendid.":"Работодатели несут бремя доказывания законности увольнения. Закон предполагает, что ваше увольнение было незаконным — работодатель должен представить доказательства обратного."}</div>`;
+  if(disc) h+=`<div class="al al-amber">⚖ <strong>${lang==="en"?"Potential discrimination":lang==="et"?"Võimalik diskrimineerimine":"Возможная дискриминация"}</strong><br>${lang==="en"?"You have additional rights under the Equal Treatment Act and Gender Equality Act. Contact the Gender Equality and Equal Treatment Commissioner (free, independent) in addition to the Labour Inspectorate.":lang==="et"?"Teil on lisaõigused võrdse kohtlemise seaduse ja soolise võrdõiguslikkuse seaduse alusel. Võtke ühendust soolise võrdõiguslikkuse ja võrdse kohtlemise volinikuga (tasuta, sõltumatu) lisaks tööinspektsioonile.":"У вас есть дополнительные права по Закону о равном обращении и Закону о гендерном равенстве. Помимо Трудовой инспекции, обратитесь к Комиссару по гендерному равенству и равному обращению (бесплатно, независимо)."}</div>`;
+  if(isPressure) h+=`<div class="al al-red">⚠ <strong>${lang==="en"?"Warning — pressure to resign":lang==="et"?"Hoiatus — surve omal soovil lahkumiseks":"Предупреждение — давление с целью вынудить уволиться"}</strong><br>${lang==="en"?"If you signed a voluntary resignation under pressure or were told your only option was to sign, that document may be challengeable. Do not sign anything you have not agreed to freely. Seek advice before accepting any settlement offer.":lang==="et"?"Kui kirjutasite alla omal soovil lahkumise avaldusele surve all või öeldi teile, et see on ainus võimalus, võib see dokument olla vaidlustatav. Ärge allkirjastage midagi, millega te ei nõustu vabatahtlikult. Otsige nõu enne mis tahes kompromissipakkumuse vastuvõtmist.":"Если вы подписали заявление об уходе под давлением или вам сказали, что это единственный вариант, этот документ может быть оспорен. Не подписывайте ничего, с чем вы не согласны добровольно. Получите консультацию до принятия любого мирового предложения."}</div>`;
+  if(isContingent) h+=`<div class="al al-red"><strong>${lang==="en"?"Contingent termination is void":lang==="et"?"Tingimuslik vallandamine on tühine":"Условное увольнение недействительно"}</strong><br>${lang==="en"?"A termination notice that is conditional or linked to a future event is void under Estonian law (ECA § 95). Challenge this immediately.":lang==="et"?"Tingimuslik või tulevase sündmusega seotud vallandamisteatis on Eesti seaduse alusel tühine (TLS § 95). Vaidlustage see kohe.":"Уведомление об увольнении, которое является условным или связано с будущим событием, недействительно по эстонскому закону (ЗТД § 95). Немедленно оспорьте это."}</div>`;
+  if(unpaid) h+=`<div class="al al-red"><strong>${lang==="en"?"Outstanding payments owed to you":lang==="et"?"Teile võlgnetavad tasumata summad":"Причитающиеся вам невыплаченные суммы"}</strong><br>${lang==="en"?"All wages, unused holiday pay, and other due amounts must be paid on the final day of employment. Late payment incurs interest at 10.15% per year (0.028% per day) from 01.01.2026. Use <a href='http://www.viivisekalkulaator.ee' target='_blank'>viivisekalkulaator.ee</a> to calculate interest owed.":lang==="et"?"Kõik palgad, kasutamata puhkusehüvitis ja muud tähtajal nõutavad summad tuleb maksta töölepingu lõppemise päeval. Hilinenud makse toob kaasa intressi 10,15% aastas (0,028% päevas) alates 01.01.2026. Kasutage <a href='http://www.viivisekalkulaator.ee' target='_blank'>viivisekalkulaator.ee</a> tähtajaks maksmata intressi arvutamiseks.":"Вся заработная плата, компенсация за неиспользованный отпуск и прочие причитающиеся суммы должны быть выплачены в последний день работы. За просрочку начисляются проценты по ставке 10,15% в год (0,028% в день) с 01.01.2026. Используйте <a href='http://www.viivisekalkulaator.ee' target='_blank'>viivisekalkulaator.ee</a> для расчёта процентов."}</div>`;
+
+  // ── RIGHTS ──
+  h+=`<p class="sec-lbl">${lang==="en"?"Your rights under Estonian law":lang==="et"?"Teie õigused Eesti seaduse alusel":"Ваши права по эстонскому закону"}</p>`;
+
+  if(isVerbal){
+    h+=rc(
+      lang==="en"?"Verbal termination is legally void":lang==="et"?"Suuline vallandamine on seaduslikult tühine":"Устное увольнение юридически недействительно",
+      lang==="en"?"ECA § 95 requires termination in a reproducible written format. Verbal dismissal — or by phone call only — has no legal effect. Your employment is legally still ongoing until proper written notice is received. The 30-day challenge clock does not start until you receive valid written notice.":lang==="et"?"TLS § 95 nõuab vallandamist kirjalikku vormi taasesitatavas formaadis. Suulisel vallandamisel — või ainult telefoni teel — pole õiguslikku jõudu. Teie tööleping on seaduslikult endiselt kehtiv, kuni saate kehtiva kirjaliku teatise. 30-päevane vaidlustamise tähtaeg ei hakka jooksma enne, kui saate kehtiva kirjaliku teatise.":"ЗТД § 95 требует увольнения в воспроизводимой письменной форме. Устное увольнение — или только по телефону — не имеет юридической силы. Ваш трудовой договор юридически продолжает действовать до получения надлежащего письменного уведомления. 30-дневный срок оспаривания не начинается до получения действительного письменного уведомления."
+    );
   }
 
-  const comp = RIGHTS.unfairComp[lang];
-  html += `<div class="right-card"><div class="right-card-title">${comp.title}</div><div class="right-card-body">${comp.body}</div></div>`;
-
-  const reason = RIGHTS.reasonRequired[lang];
-  html += `<div class="right-card"><div class="right-card-title">${reason.title}</div><div class="right-card-body">${reason.body}</div></div>`;
-
-  if (isRedundancy) {
-    const sev = RIGHTS.redundancySeverance[lang];
-    html += `<div class="right-card"><div class="right-card-title">${sev.title}</div><div class="right-card-body">${sev.body}</div></div>`;
+  if(notProbation&&nr){
+    h+=rc(
+      lang==="en"?`You were entitled to ${nr.l} advance notice`:lang==="et"?`Teil oli õigus ${nr.l==="15 calendar days"?"15-kalendripäevasele":nr.l==="30 calendar days"?"30-kalendripäevasele":nr.l==="60 calendar days"?"60-kalendripäevasele":"90-kalendripäevasele"} etteteatamisele`:`Вам полагалось ${nr.l==="15 calendar days"?"15":nr.l==="30 calendar days"?"30":nr.l==="60 calendar days"?"60":"90"} календарных дней уведомления`,
+      lang==="en"?`For your length of service, Estonian law requires a minimum of ${nr.l} advance notice (ECA § 97). If you received less, the employer must pay compensation equal to your average daily wage for every working day (Mon–Fri, excluding public holidays) that fell short of the required notice period.`:lang==="et"?`Teie tööstaaži arvestades nõuab Eesti seadus vähemalt ${nr.l==="15 calendar days"?"15 kalendripäevast":nr.l==="30 calendar days"?"30 kalendripäevast":nr.l==="60 calendar days"?"60 kalendripäevast":"90 kalendripäevast"} etteteatamist (TLS § 97). Kui saite vähem, peab tööandja maksma hüvitist, mis on võrdne teie keskmise tööpäevatasuga iga tööpäeva eest (E–R, välja arvatud riiklikud pühad), mis jäi puudu nõutud etteteatamisperioodist.`:`При вашем стаже эстонский закон требует минимум ${nr.l==="15 calendar days"?"15":nr.l==="30 calendar days"?"30":nr.l==="60 calendar days"?"60":"90"} календарных дней уведомления (ЗТД § 97). Если вы получили меньше, работодатель обязан выплатить компенсацию в размере вашей средней дневной зарплаты за каждый рабочий день (пн–пт, кроме праздников), на который не хватает до требуемого срока уведомления.`
+    );
   }
 
-  // Steps
-  html += `<p class="section-label">${u.stepsTitle}</p>`;
-  const steps = STEPS[lang].filter((s, i) => i !== 4 || isDisc);
-  steps.forEach((s, i) => {
-    html += `<div class="step-item"><div class="step-num">${i + 1}</div><div class="step-body"><strong>${s.title}</strong><br>${s.body}${s.note ? `<div class="step-note">${s.note}</div>` : ''}</div></div>`;
+  if(ans.contract==="probation"){
+    h+=rc(
+      lang==="en"?"Probationary period — 15 days notice required":lang==="et"?"Katseaeg — nõutav 15-päevane etteteatamine":"Испытательный срок — требуется 15 дней уведомления",
+      lang==="en"?"During probation, either party must give 15 calendar days notice (ECA § 86, § 96). The employer must give a reason and cancellation must not conflict with the goal of the probationary period — for example, the employer cannot use the probation clause to disguise an economic dismissal or a misconduct dismissal.":lang==="et"?"Katseajal peab kumbki pool andma 15 kalendripäevast etteteatamist (TLS § 86, § 96). Tööandja peab andma põhjuse ja vallandamine ei tohi olla vastuolus katseaja eesmärgiga — näiteks ei saa tööandja kasutada katseaja klauslit majanduslikku või rikkumise tõttu toimuva vallandamise varjamiseks.":"В период испытания любая из сторон должна дать 15 календарных дней уведомления (ЗТД § 86, § 96). Работодатель обязан указать причину, и увольнение не должно противоречить цели испытательного срока — например, работодатель не может использовать испытательный срок для маскировки экономического увольнения или увольнения за нарушение."
+    );
+  }
+
+  if(isMisconduct&&noWarning){
+    h+=rc(
+      lang==="en"?"No prior warning — potential procedural violation":lang==="et"?"Eelhoiatus puudub — võimalik menetlusrikkumine":"Нет предупреждения — возможное процессуальное нарушение",
+      lang==="en"?"For dismissals based on breach of duties or poor performance, Estonian law generally requires that the employer first give a written warning (ECA § 88). Dismissal without a prior warning — except in cases of fundamental breach such as theft or serious misconduct — may be procedurally invalid and challengeable.":lang==="et"?"Kohustuste rikkumise või kehva tulemuslikkuse tõttu vallandamise korral nõuab Eesti seadus üldjuhul, et tööandja annaks esmalt kirjaliku hoiatuse (TLS § 88). Vallandamine ilma eelhoiatuseta — välja arvatud olulise rikkumise korral, nagu vargus või tõsine üleastumise — võib olla menetluslikult kehtetu ja vaidlustatav.":"При увольнении за нарушение обязанностей или низкую производительность эстонский закон, как правило, требует, чтобы работодатель сначала выдал письменное предупреждение (ЗТД § 88). Увольнение без предварительного предупреждения — за исключением грубых нарушений, таких как кража или серьёзный проступок, — может быть процессуально недействительным и оспоримым."
+    );
+  }
+
+  if(isRedundancy&&noAltWork){
+    h+=rc(
+      lang==="en"?"No alternative work offered — required before redundancy":lang==="et"?"Alternatiivset tööd ei pakutud — koondamiseks nõutav":"Альтернативная работа не предложена — требуется до сокращения",
+      lang==="en"?"Before making an employee redundant, the employer must offer any available alternative work — including positions outside the employee's usual field and, if necessary, organise retraining (ECA § 89). This obligation cannot be replaced by requiring the employee to apply for a vacancy through a competition. If no alternative work was genuinely offered, the redundancy may be unlawful.":lang==="et"?"Enne töötaja koondamist peab tööandja pakkuma kõiki olemasolevaid alternatiivseid töökohti — kaasa arvatud töötaja tavapärasest valdkonnast väljaspool olevaid ametikohti ja vajadusel korraldama ümberõpet (TLS § 89). Seda kohustust ei saa asendada töötaja konkursil osalemise nõudega. Kui alternatiivset tööd tegelikult ei pakutud, võib koondamine olla ebaseaduslik.":"Перед сокращением работодатель обязан предложить все имеющиеся вакансии — включая должности за пределами привычной сферы работника и, при необходимости, организовать переобучение (ЗТД § 89). Это обязательство не может быть заменено требованием участвовать в конкурсе на вакансию. Если альтернативная работа не была реально предложена, сокращение может быть незаконным."
+    );
+  }
+
+  if(noReason){
+    h+=rc(
+      lang==="en"?"No reason given — procedural violation":lang==="et"?"Põhjust ei antud — menetlusrikkumine":"Причина не названа — процессуальное нарушение",
+      lang==="en"?"Employers are always required to justify termination in writing (ECA § 95). Failure to provide a reason does not automatically void the termination, but entitles you to claim compensation for damages caused by the omission. You can also demand a written reason from your employer.":lang==="et"?"Tööandjad peavad alati vallandamist kirjalikult põhjendama (TLS § 95). Põhjuse esitamata jätmine ei muuda vallandamist automaatselt tühiseks, kuid annab teile õiguse nõuda hüvitist kahju eest, mis tekkis põhjenduse puudumisest. Samuti võite nõuda tööandjalt kirjalikku põhjust.":"Работодатели всегда обязаны письменно обосновать увольнение (ЗТД § 95). Непредставление причины автоматически не делает увольнение недействительным, но даёт вам право требовать компенсацию за ущерб, причинённый её отсутствием. Вы также можете потребовать от работодателя письменное обоснование."
+    );
+  }
+
+  if(refusedChange){
+    h+=rc(
+      lang==="en"?"Dismissed for refusing a unilateral contract change":lang==="et"?"Vallandati ühepoolsest lepingumuutusest keeldumise tõttu":"Уволен за отказ от одностороннего изменения договора",
+      lang==="en"?"An employment contract can only be changed by agreement of both parties (ECA § 12). If you were dismissed specifically because you refused to accept a unilateral change imposed by your employer, that dismissal may be challengeable as a retaliatory or unlawful cancellation.":lang==="et"?"Töölepingut saab muuta ainult mõlema poole kokkuleppel (TLS § 12). Kui vallandati just seetõttu, et keeldusite tööandja ühepoolselt kehtestatud muutuse vastuvõtmisest, võib see vallandamine olla vaidlustatav kui kättemaksuga seotud või ebaseaduslik tühistamine.":"Трудовой договор может быть изменён только по соглашению обеих сторон (ЗТД § 12). Если вас уволили именно потому, что вы отказались принять одностороннее изменение, навязанное работодателем, это увольнение может быть оспорено как ответное или незаконное."
+    );
+  }
+
+  h+=rc(
+    lang==="en"?"Compensation for unlawful termination (ECA § 109)":lang==="et"?"Hüvitis ebaseadusliku vallandamise eest (TLS § 109)":"Компенсация за незаконное увольнение (ЗТД § 109)",
+    lang==="en"?"If your termination is found unlawful, the Labour Dispute Committee or court may award up to 3 months average wages as compensation. The amount is set at their discretion based on circumstances — in practice, the full 3 months is commonly awarded. The termination is also legally deemed not to have taken place. For pregnant employees and elected employee representatives, the compensation is up to 6 months average wages.":lang==="et"?"Kui teie vallandamine leitakse olevat ebaseaduslik, võib töövaidluskomisjon või kohus mõista välja kuni 3 kuu keskmise palga hüvitisena. Summa määratakse asjaoludest lähtuvalt nende äranägemise järgi — praktikas mõistetakse sageli välja täis 3 kuud. Vallandamist loetakse ka seaduslikult mittetoimunuks. Rasedate töötajate ja valitud töötajate esindajate puhul on hüvitis kuni 6 kuu keskmine palk.":"Если увольнение признано незаконным, Комиссия по трудовым спорам или суд может присудить до 3 средних месячных зарплат в качестве компенсации. Размер устанавливается по их усмотрению с учётом обстоятельств — на практике нередко присуждается полная сумма за 3 месяца. Увольнение также считается юридически не имевшим места. Для беременных работниц и избранных представителей работников компенсация составляет до 6 средних месячных зарплат."
+  );
+
+  if(isRedundancy){
+    h+=rc(
+      lang==="en"?"Redundancy severance pay (ECA § 100)":lang==="et"?"Koondamishüvitis (TLS § 100)":"Выходное пособие при сокращении (ЗТД § 100)",
+      lang==="en"?"If you were made redundant, your employer must pay 1 month average wage as severance on the last day (ECA § 100). Additionally, if you have worked 5 or more years, the Unemployment Insurance Fund (Töötukassa) pays an extra redundancy benefit. The employer must submit an application to the Fund on your behalf. Workers raising a child under 3 and employee representatives have preferential right to keep their job in redundancy situations.":lang==="et"?"Koondamise korral peab tööandja maksma 1 kuu keskmise palga hüvitisena viimasel tööpäeval (TLS § 100). Lisaks, kui olete töötanud 5 või enam aastat, maksab Töötukassa lisahüvitist. Tööandja peab esitama teie nimel avalduse Töötukassasse. Alla 3-aastast last kasvatavatel töötajatel ja töötajate esindajatel on koondamissituatsioonides eelisõigus töökohta säilitada.":"При сокращении работодатель обязан выплатить 1 среднемесячную зарплату в качестве выходного пособия в последний рабочий день (ЗТД § 100). Кроме того, если вы проработали 5 или более лет, Касса по безработице (Töötukassa) выплачивает дополнительное пособие. Работодатель обязан подать заявление в Кассу от вашего имени. Работники, воспитывающие ребёнка до 3 лет, и представители работников имеют преимущественное право на сохранение рабочего места при сокращениях."
+    );
+  }
+
+  h+=rc(
+    lang==="en"?"Your final settlement rights":lang==="et"?"Teie lopparve õigused":"Ваши права при окончательном расчёте",
+    lang==="en"?"On the last day of employment, the employer must pay: all wages earned, unused annual holiday compensation, any outstanding payments. If anything is unpaid, you can claim it at the Labour Dispute Committee (wage claims have a 3-year limitation period). Late payment incurs interest at 10.15% per year from 01.01.2026.":lang==="et"?"Töölepingu lõppemise päeval peab tööandja maksma: kõik teenitud palgad, kasutamata iga-aastase puhkuse hüvitise, kõik muud tähtajal nõutavad maksed. Kui midagi on maksmata, saate nõuda seda töövaidluskomisjonis (palganõuetel on 3-aastane aegumistähtaeg). Hilinenud makselt koguneb intress 10,15% aastas alates 01.01.2026.":"В последний день работы работодатель должен выплатить: всю заработанную зарплату, компенсацию за неиспользованный ежегодный отпуск, все прочие причитающиеся выплаты. Если что-то не выплачено, вы можете потребовать это в Комиссии по трудовым спорам (требования по зарплате имеют 3-летний срок давности). На просроченные выплаты начисляются проценты по ставке 10,15% в год с 01.01.2026."
+  );
+
+  // ── STEPS ──
+  h+=`<p class="sec-lbl">${lang==="en"?"What to do — step by step":lang==="et"?"Mida teha — samm-sammult":"Что делать — шаг за шагом"}</p>`;
+
+  const steps=lang==="en"?[
+    {t:"Gather your documents immediately",b:"Collect before memories fade: employment contract, last 3 months payslips, written termination notice (or screenshot), any prior written warnings, all correspondence with employer (email/messages), work schedule records, and medical certificates if health was involved.",n:null},
+    {t:"Request written reasoning from your employer",b:"If you did not receive a written reason, email your employer requesting it. Subject line: <em>Request for written justification of termination</em>. Keep copies of everything sent. Also request a written work assessment if you want one — you are entitled to it.",n:null},
+    {t:"Check your employment register entry",b:"Your employer must deregister you from the Employment Register at emta.ee on or before the termination date. Check your entry at <a href='https://www.eesti.ee' target='_blank'>eesti.ee</a> or contact the Tax and Customs Board. The termination basis recorded affects your unemployment insurance eligibility — if it says misconduct (§ 88 clauses 3–8), you may not be entitled to unemployment benefit.",n:null},
+    {t:"Contact the Labour Inspectorate — free advice",b:"Call <strong>+372 640 6000</strong> (Mon–Fri 09:00–15:00) or email <a href='mailto:ti@ti.ee'>ti@ti.ee</a>. Free legal advice and the ability to investigate your employer. You can also report anonymously at their website.",n:"Reporting can be done anonymously"},
+    {t:"File with the Labour Dispute Committee",b:"Free of charge — no state fees. Typically resolved within 45 calendar days. Faster than court for most cases. The application must be submitted in Estonian. Email your application to the committee for your region. For Tallinn: <a href='mailto:info.tvk@ti.ee'>info.tvk@ti.ee</a>. Find the application form at ti.ee.",n:"If you need translation: Tallinn Migration Centre offers free translation for employment disputes — allow at least 14 days"},
+    {t:"Register as unemployed if applicable",b:"Register with the Unemployment Insurance Fund (Töötukassa) at <a href='https://www.tootukassa.ee/en' target='_blank'>tootukassa.ee</a> within 10 days of losing your job to preserve your benefit entitlement period. Note: if your employer recorded termination for gross misconduct (§ 88 clauses 3–8), you may not be entitled to unemployment insurance benefit.",n:null},
+    ...(disc?[{t:"Contact the Equal Treatment Commissioner",b:"Email <a href='mailto:info@volinik.ee'>info@volinik.ee</a> or call <strong>+372 626 9059</strong>. Free, independent service. They can advise you and assist with submitting a discrimination complaint. For discrimination cases, this route can run in parallel to the Labour Dispute Committee.",n:null}]:[]),
+    {t:"Consider a lawyer for complex or high-value claims",b:"If your case involves significant compensation, discrimination, employer bankruptcy, or the employer is strongly contesting everything, a labour law specialist can represent you at the committee or court. Legal costs may be recoverable if you win.",n:null}
+  ]:lang==="et"?[
+    {t:"Koguge oma dokumendid kohe",b:"Koguge enne mälestuste haihtumist: tööleping, viimase 3 kuu palgalehed, kirjalik vallandamisteade (või ekraanipilt), varasemate kirjalike hoiatuste koopiad, kogu kirjavahetus tööandjaga (e-post/sõnumid), töögraafiku andmed ja meditsiinilised tõendid, kui tervis oli seotud.",n:null},
+    {t:"Nõudke tööandjalt kirjalikku põhjendust",b:"Kui te ei saanud kirjalikku põhjust, saatke tööandjale e-kiri, milles palute seda. Teema: <em>Vallandamise kirjaliku põhjenduse taotlus</em>. Hoidke koopiad kõigest saadetust. Samuti võite nõuda kirjalikku tööhinnangut — selleks on teil õigus.",n:null},
+    {t:"Kontrollige oma töötamise registri kannet",b:"Tööandja peab teid töötamise registrist emta.ee-s kustutama hiljemalt vallandamise kuupäeval. Kontrollige oma kannet aadressil <a href='https://www.eesti.ee' target='_blank'>eesti.ee</a> või võtke ühendust Maksu- ja Tolliametiga. Registreeritud vallandamise alus mõjutab teie töötuskindlustuse hüvitise õigust — kui seal on kirjas rikkumine (TLS § 88 punktid 3–8), ei pruugi teil olla õigust töötushüvitisele.",n:null},
+    {t:"Võtke ühendust Tööinspektsiooniga — tasuta nõustamine",b:"Helistage <strong>+372 640 6000</strong> (E–R 09:00–15:00) või saatke e-kiri <a href='mailto:ti@ti.ee'>ti@ti.ee</a>. Tasuta õigusnõustamine ja võimalus uurida teie tööandjat. Samuti saate teatada anonüümselt nende veebilehel.",n:"Teatamist saab teha anonüümselt"},
+    {t:"Esitage avaldus töövaidluskomisjonile",b:"Tasuta — riigilõivuta. Lahendatakse tavaliselt 45 kalendripäeva jooksul. Kiirem kui kohus enamiku juhtumite puhul. Avaldus tuleb esitada eesti keeles. Saatke avaldus oma piirkonna komisjonile. Tallinna jaoks: <a href='mailto:info.tvk@ti.ee'>info.tvk@ti.ee</a>. Avalduse vormi leiate ti.ee-lt.",n:"Kui vajate tõlkimist: Tallinna Migratsioonikeskus pakub tasuta tõlketeenuseid tööhõivevaidluste jaoks — arvestage vähemalt 14 päevaga"},
+    {t:"Registreeruge töötuna, kui see on asjakohane",b:"Registreeruge Töötukassas aadressil <a href='https://www.tootukassa.ee' target='_blank'>tootukassa.ee</a> 10 päeva jooksul pärast töökoha kaotamist, et säilitada hüvitise saamise periood. Märkus: kui tööandja registreeris vallandamise tõsise rikkumise tõttu (TLS § 88 punktid 3–8), ei pruugi teil olla õigust töötuskindlustuse hüvitisele.",n:null},
+    ...(disc?[{t:"Võtke ühendust võrdõigusvolinikuga",b:"Saatke e-kiri <a href='mailto:info@volinik.ee'>info@volinik.ee</a> või helistage <strong>+372 626 9059</strong>. Tasuta, sõltumatu teenus. Nad saavad teid nõustada ja abistada diskrimineerimiskaebuse esitamisel. Diskrimineerimisjuhtumite puhul saab seda käiku kasutada paralleelselt töövaidluskomisjoniga.",n:null}]:[]),
+    {t:"Kaaluge juristi kaasamist keeruliste või suure väärtusega nõuete puhul",b:"Kui teie juhtum hõlmab märkimisväärset hüvitist, diskrimineerimist, tööandja pankrotti või tööandja vaidlustab kõike tugevalt, saab tööõiguse spetsialist teid esindada komisjonis või kohtus. Kohtukulud võivad võidu korral olla hüvitatavad.",n:null}
+  ]:[
+    {t:"Немедленно соберите документы",b:"Соберите до того, как воспоминания померкнут: трудовой договор, расчётные листки за последние 3 месяца, письменное уведомление об увольнении (или скриншот), копии предыдущих письменных предупреждений, всю переписку с работодателем (эл. почта/сообщения), данные о рабочем времени и медицинские справки, если было задействовано здоровье.",n:null},
+    {t:"Запросите у работодателя письменное обоснование",b:"Если вы не получили письменную причину, отправьте работодателю электронное письмо с запросом. Тема: <em>Запрос письменного обоснования увольнения</em>. Сохраняйте копии всего отправленного. Также вы можете потребовать письменную характеристику — вы имеете на это право.",n:null},
+    {t:"Проверьте запись в реестре занятости",b:"Работодатель обязан снять вас с учёта в реестре занятости emta.ee не позднее даты увольнения. Проверьте свою запись на <a href='https://www.eesti.ee' target='_blank'>eesti.ee</a> или обратитесь в Налогово-таможенный департамент. Зафиксированное основание для увольнения влияет на право получения пособия по безработице — если указано нарушение (ЗТД § 88 пп. 3–8), вы можете лишиться пособия.",n:null},
+    {t:"Обратитесь в Трудовую инспекцию — бесплатная консультация",b:"Позвоните <strong>+372 640 6000</strong> (Пн–Пт 09:00–15:00) или напишите на <a href='mailto:ti@ti.ee'>ti@ti.ee</a>. Бесплатная юридическая консультация и возможность проверить вашего работодателя. Можно также сообщить анонимно через их сайт.",n:"Сообщение можно подать анонимно"},
+    {t:"Подайте заявление в Комиссию по трудовым спорам",b:"Бесплатно — без государственной пошлины. Обычно рассматривается в течение 45 календарных дней. Быстрее суда в большинстве случаев. Заявление должно быть подано на эстонском языке. Отправьте заявление в комиссию вашего региона. По Таллину: <a href='mailto:info.tvk@ti.ee'>info.tvk@ti.ee</a>. Бланк заявления на ti.ee.",n:"Если нужен перевод: Таллинский миграционный центр предоставляет бесплатные услуги перевода для трудовых споров — рассчитывайте минимум 14 дней"},
+    {t:"Зарегистрируйтесь как безработный при необходимости",b:"Зарегистрируйтесь в Кассе по безработице (Töötukassa) на <a href='https://www.tootukassa.ee/en' target='_blank'>tootukassa.ee</a> в течение 10 дней после потери работы, чтобы сохранить период получения пособия. Примечание: если работодатель зафиксировал увольнение за грубое нарушение (ЗТД § 88 пп. 3–8), вы можете не иметь права на страховое пособие по безработице.",n:null},
+    ...(disc?[{t:"Обратитесь к Комиссару по равному обращению",b:"Напишите на <a href='mailto:info@volinik.ee'>info@volinik.ee</a> или позвоните <strong>+372 626 9059</strong>. Бесплатная независимая служба. Могут проконсультировать и помочь с подачей жалобы на дискриминацию. По делам о дискриминации этот маршрут может использоваться параллельно с Комиссией по трудовым спорам.",n:null}]:[]),
+    {t:"Рассмотрите привлечение юриста для сложных или крупных дел",b:"Если ваше дело связано со значительной компенсацией, дискриминацией, банкротством работодателя или работодатель активно оспаривает всё, специалист по трудовому праву может представлять вас в комиссии или суде. Судебные расходы могут быть взысканы при успешном исходе.",n:null}
+  ];
+
+  steps.forEach((s,i)=>{
+    h+=`<div class="step"><div class="step-n">${i+1}</div><div class="step-b"><strong>${s.t}</strong><br>${s.b}${s.n?`<div class="step-note">${s.n}</div>`:""}</div></div>`;
   });
 
-  // Docs
-  html += `<p class="section-label">${u.docsTitle}</p><ul class="doc-list">`;
-  DOCS[lang].forEach(d => { html += `<li>${d}</li>`; });
-  html += '</ul>';
+  // ── CHECKLIST ──
+  h+=`<p class="sec-lbl">${lang==="en"?"Document checklist — gather these now":lang==="et"?"Dokumentide kontrollnimekiri — koguge need kohe":"Контрольный список документов — соберите сейчас"}</p><ul class="cl">`;
+  const docs=lang==="en"?[
+    "Employment contract (or evidence of employment if informal)",
+    "Payslips for the last 3 months",
+    "Written termination notice (original or screenshot)",
+    "Any prior written warnings from employer",
+    "All email and message correspondence with employer",
+    "Work schedule records or timesheets",
+    "Medical certificates (if health was involved)",
+    "Proof of any unpaid wages or holiday balance",
+    "Names and contact details of any witnesses",
+    "Bank statements showing salary payment history"
+  ]:lang==="et"?[
+    "Tööleping (või tõend töösuhte kohta mitteformaalse töö puhul)",
+    "Viimase 3 kuu palgalehed",
+    "Kirjalik vallandamisteade (originaal või ekraanipilt)",
+    "Tööandja varasemad kirjalikud hoiatused",
+    "Kogu e-posti ja sõnumikirjavahetus tööandjaga",
+    "Töögraafiku andmed või tööajatabelid",
+    "Meditsiinilised tõendid (kui tervis oli seotud)",
+    "Tõend maksmata palkade või puhkusebilansi kohta",
+    "Tunnistajate nimed ja kontaktandmed",
+    "Pangaväljavõtted palga maksmise ajaloo kohta"
+  ]:[
+    "Трудовой договор (или доказательства трудоустройства при неформальной работе)",
+    "Расчётные листки за последние 3 месяца",
+    "Письменное уведомление об увольнении (оригинал или скриншот)",
+    "Предыдущие письменные предупреждения от работодателя",
+    "Вся переписка с работодателем по электронной почте и в мессенджерах",
+    "Данные о рабочем времени или табели учёта рабочего времени",
+    "Медицинские справки (если было задействовано здоровье)",
+    "Документы о невыплаченной зарплате или остатке отпуска",
+    "Имена и контактные данные свидетелей",
+    "Банковские выписки с историей выплаты зарплаты"
+  ];
+  docs.forEach(d=>{ h+=`<li>${d}</li>`; });
+  h+="</ul>";
 
-  // Links
-  html += `<p class="section-label">${u.linksTitle}</p><div class="links-table">`;
-  LINKS.forEach(lk => {
-    const l = lk[lang];
-    html += `<div class="link-row">
-      <div>
-        <div class="link-name">${l.label}${l.tag ? `<span class="tag tag-${l.tag}">${l.tag === 'free' ? (lang === 'et' ? 'Tasuta' : lang === 'ru' ? 'Бесплатно' : 'Free') : l.tag}</span>` : ''}</div>
-        ${l.note ? `<div class="link-note">${l.note}</div>` : ''}
-      </div>
-      <a class="link-go" href="${lk.url}" target="_blank" rel="noopener">Visit →</a>
-    </div>`;
+  // ── LINKS ──
+  h+=`<p class="sec-lbl">${lang==="en"?"Official contacts & links":lang==="et"?"Ametlikud kontaktid ja lingid":"Официальные контакты и ссылки"}</p>`;
+  const links=[
+    {n:lang==="en"?"Labour Inspectorate (Tööinspektsioon)":lang==="et"?"Tööinspektsioon":"Трудовая инспекция (Tööinspektsioon)",note:"+372 640 6000 · ti@ti.ee",tag:"free",url:"https://www.ti.ee/en"},
+    {n:lang==="en"?"Report a violation (anonymously if preferred)":lang==="et"?"Teavita rikkumisest (soovi korral anonüümselt)":"Сообщить о нарушении (можно анонимно)",note:null,tag:"free",url:"https://www.ti.ee/en/government-agency-news-and-contacts/contacts/reporting-violation-sending-tip"},
+    {n:lang==="en"?"Labour Dispute Committee — how to apply":lang==="et"?"Töövaidluskomisjon — kuidas avaldust esitada":"Комиссия по трудовым спорам — как подать заявление",note:lang==="en"?"Free · No state fee · 45-day resolution · Must be in Estonian":lang==="et"?"Tasuta · Ilma riigilõivuta · 45 päevaga · Eesti keeles":"Бесплатно · Без госпошлины · 45 дней · На эстонском языке",tag:"free",url:"https://www.ti.ee/en/extrajudicial-proceeding-labor-disputes/how-submit-application/recourse-labour-dispute-committee"},
+    {n:lang==="en"?"Labour Dispute Committee contacts by region":lang==="et"?"Töövaidluskomisjonide kontaktid piirkonniti":"Комиссии по трудовым спорам — контакты по регионам",note:null,tag:null,url:"https://www.ti.ee/en/extrajudicial-proceeding-labor-disputes/how-submit-application/contact-information-and"},
+    {n:lang==="en"?"Unilateral termination guide (tooelu.ee)":lang==="et"?"Töölepingu ühepoolse lõpetamise juhend":"Руководство по одностороннему расторжению (tooelu.ee)",note:lang==="en"?"Last updated 28.01.2026":lang==="et"?"Viimati uuendatud 28.01.2026":"Последнее обновление 28.01.2026",tag:null,url:"https://www.tooelu.ee/en/31/unilateral-termination-employment-contract"},
+    {n:lang==="en"?"Employment Contracts Act — full legal text":lang==="et"?"Töölepingu seadus — täistekst":"Закон о трудовом договоре — полный текст",note:lang==="en"?"In force from 13.02.2026 — Riigi Teataja":lang==="et"?"Jõustunud 13.02.2026 — Riigi Teataja":"В силе с 13.02.2026 — Riigi Teataja",tag:null,url:"https://www.riigiteataja.ee/en/eli/ee/511022026002/consolide"},
+    {n:lang==="en"?"Gender Equality & Equal Treatment Commissioner":lang==="et"?"Soolise võrdõiguslikkuse ja võrdse kohtlemise volinik":"Комиссар по гендерному равенству и равному обращению",note:"+372 626 9059 · info@volinik.ee",tag:"free",url:"https://www.volinik.ee/en/"},
+    {n:lang==="en"?"Unemployment Insurance Fund (Töötukassa)":lang==="et"?"Eesti Töötukassa":"Касса по безработице (Töötukassa)",note:lang==="en"?"Benefits, job support, retraining":lang==="et"?"Hüvitised, töötugi, ümberõpe":"Пособия, поддержка занятости, переобучение",tag:null,url:"https://www.tootukassa.ee/en"},
+    {n:lang==="en"?"Late payment interest calculator":lang==="et"?"Viivise kalkulaator":"Калькулятор процентов за просрочку",note:"viivisekalkulaator.ee",tag:null,url:"http://www.viivisekalkulaator.ee"}
+  ];
+  links.forEach(lk=>{
+    const tagHtml=lk.tag?`<span class="tag tag-${lk.tag}">${lk.tag==="free"?(lang==="et"?"Tasuta":lang==="ru"?"Бесплатно":"Free"):"!"}</span>`:"";
+    h+=`<div class="lk-row"><div><div class="lk-name">${lk.n}${tagHtml}</div>${lk.note?`<div class="lk-note">${lk.note}</div>`:""}</div><a class="lk-go" href="${lk.url}" target="_blank" rel="noopener">→</a></div>`;
   });
-  html += '</div>';
 
-  // Translation notice
-  html += `<div class="translate-box"><p><strong>Language note:</strong> ${u.translateNote}</p><a href="${u.translateLink}" target="_blank" rel="noopener">${u.translateLinkLabel}</a></div>`;
+  // ── TRANSLATION NOTE ──
+  h+=`<div class="tr-box"><p><strong>${lang==="en"?"Language note":lang==="et"?"Keele märkus":"Языковая заметка"}:</strong> ${lang==="en"?"The Labour Dispute Committee application must be submitted in Estonian. Tallinn Migration Centre provides free translation for employment disputes — book at least 14 days in advance.":lang==="et"?"Töövaidluskomisjoni avaldus tuleb esitada eesti keeles. Tallinna Migratsioonikeskus pakub tasuta tõlketeenuseid tööhõivevaidluste jaoks — broneerige vähemalt 14 päeva ette.":"Заявление в Комиссию по трудовым спорам должно быть подано на эстонском языке. Таллинский миграционный центр предоставляет бесплатные услуги перевода для трудовых споров — бронируйте минимум за 14 дней."}</p><a href="https://www.ti.ee/en/extrajudicial-proceeding-labor-disputes/how-submit-application/recourse-labour-dispute-committee" target="_blank" rel="noopener">${lang==="en"?"Application process details →":lang==="et"?"Avalduse esitamise üksikasjad →":"Подробности о подаче заявления →"}</a></div>`;
 
-  // Legal note
-  html += `<p class="legal-note">${u.legalNote}</p>`;
+  // ── LEGAL NOTE ──
+  h+=`<p class="legal">${lang==="en"?"Based on the Estonian Employment Contracts Act (in force 13.02.2026, RT I, 03.02.2026, 5), Labour Dispute Resolution Act, and tooelu.ee (updated 28.01.2026). Key deadlines: 30 days to challenge termination (Labour Dispute Resolution Act § 6(2)); 4 months for broader employment claims (ECA § 3¹); 3 years for wage claims. This tool explains the law — it is not legal advice.":lang==="et"?"Põhineb Eesti töölepingu seadusel (jõustunud 13.02.2026, RT I, 03.02.2026, 5), töövaidluse lahendamise seadusel ja tooelu.ee-l (uuendatud 28.01.2026). Põhitähtajad: 30 päeva vallandamise vaidlustamiseks (TVLS § 6(2)); 4 kuud laiemateks tööõiguse nõueteks (TLS § 3¹); 3 aastat palganõuete esitamiseks. See tööriist selgitab seadust — see ei ole õigusnõuanne.":"Основано на Законе о трудовом договоре Эстонии (в силе с 13.02.2026, RT I, 03.02.2026, 5), Законе о разрешении трудовых споров и tooelu.ee (обновлено 28.01.2026). Ключевые сроки: 30 дней для оспаривания увольнения (ЗРТС § 6(2)); 4 месяца для более широких трудовых требований (ЗТД § 3¹); 3 года для требований по зарплате. Этот инструмент объясняет закон — это не юридическая консультация."}</p>`;
 
-  // Restart
-  html += `<div style="margin-top:24px;"><button class="btn-secondary" onclick="restart()">${u.btnRestart}</button></div>`;
+  h+=`<div style="margin-top:20px"><button class="btn-s" onclick="restart()">${u.restart}</button></div>`;
 
-  document.getElementById('results-content').innerHTML = html;
+  document.getElementById("r-box").innerHTML=h;
 }
 
-function restart() {
-  answers = {};
-  multiSelected = {};
-  currentQ = 0;
-  showScreen('welcome');
-}
+function rc(t,b){return `<div class="rc"><div class="rc-t">${t}</div><div class="rc-b">${b}</div></div>`;}
+function restart(){ans={};multi={};cur=0;show("s-welcome");}
 </script>
 </body>
 </html>
